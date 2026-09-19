@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEDx Sunway University</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           ROOT VARIABLES
+        ========================================= */
+        :root {
+            --ted-red: #eb0028;
+            --ted-crimson: #a3001c;
+            --bg-canvas: #070709;
+            --surface-panel: #0e0e13;
+            --line-border: rgba(255, 255, 255, 0.12);
+            --line-white: rgba(255, 255, 255, 0.22);
+            --text-heading: #ffffff;
+            --text-body: #d5d5dc;
+            --text-muted: #858591;
+            --font-display: 'Playfair Display', serif;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --max-width: 1360px;
+        }
+
+        /* =========================================
+           RESET
+        ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--text-body);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Ambient Cursor Spotlight */
+        .ambient-spotlight {
+            position: fixed;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(235, 0, 40, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: min(var(--max-width), calc(100% - 64px));
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================================
+           HEADER / NAVIGATION
+        ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 82px;
+            z-index: 1000;
+            background: rgba(7, 7, 9, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line-white);
+        }
+
+        .nav-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-heading);
+            display: flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+
+        .brand-logo span.red {
+            color: var(--ted-red);
+            font-weight: 800;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-menu > li {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu > li > a {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 0;
+        }
+
+        .nav-menu > li > a:hover {
+            color: var(--text-heading);
+        }
+
+        .dropdown-arrow {
+            font-size: 0.65rem;
+            transition: transform 0.25s ease;
+        }
+
+        .dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 230px;
+            background: rgba(14, 14, 19, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--line-border);
+            border-top: 2px solid var(--ted-red);
+            padding: 8px 0;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 2000;
+        }
+
+        .dropdown-menu::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            display: block;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 13px 18px;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+        }
+
+        .dropdown-menu li a:hover {
+            background: rgba(235, 0, 40, 0.08);
+            color: white;
+            padding-left: 24px;
+        }
+
+        .cta-pill {
+            background: var(--ted-red);
+            color: #fff;
+            padding: 9px 22px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-pill:hover {
+            background: var(--ted-crimson);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 8px;
+            background: transparent;
+            border: 1px solid var(--line-border);
+            border-radius: 4px;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 82px;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 7, 9, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line-white);
+            padding: 20px 32px 25px;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-menu.active { display: flex; }
+
+        .mobile-menu > a,
+        .mobile-dropdown-toggle {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line-border);
+            transition: color 0.2s ease;
+        }
+
+        .mobile-dropdown { border-bottom: 1px solid var(--line-border); }
+
+        .mobile-dropdown-toggle {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-toggle .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .mobile-dropdown-menu {
+            display: none;
+            list-style: none;
+            padding: 0 0 8px 15px;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-menu { display: block; }
+
+        .mobile-dropdown-menu a {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 0;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-dropdown-menu a:hover { color: var(--ted-red); }
+
+        .mobile-menu .mobile-cta {
+            color: white;
+            background: var(--ted-red);
+            text-align: center;
+            border: none;
+            margin-top: 10px;
+            padding: 13px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           HERO: EDITORIAL MANIFESTO
+        ========================================= */
+        .hero-editorial {
+            padding-top: 120px;
+            padding-bottom: 70px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(235, 0, 40, 0.4);
+            background: rgba(235, 0, 40, 0.08);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--ted-red);
+            margin-bottom: 26px;
+        }
+
+        .hero-pill-badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ted-red);
+            box-shadow: 0 0 10px var(--ted-red);
+        }
+
+        .hero-editorial h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.9rem, 6.4vw, 5.8rem);
+            font-weight: 800;
+            line-height: 1.04;
+            letter-spacing: -1.8px;
+            max-width: 1100px;
+            margin: 0 auto 24px;
+            color: var(--text-heading);
+        }
+
+        .hero-editorial h1 em {
+            font-style: italic;
+            color: var(--ted-red);
+            font-weight: 400;
+        }
+
+        .hero-editorial-sub {
+            font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+            max-width: 680px;
+            margin: 0 auto 36px;
+            color: var(--text-body);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .hero-cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action-primary {
+            background: var(--ted-red);
+            color: #fff;
+            padding: 13px 28px;
+            border-radius: 4px;
+            font-family: var(--font-main);
+            font-size: 0.92rem;
+            font-weight: 700;
+            transition: background 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-action-primary:hover {
+            background: var(--ted-crimson);
+            transform: translateY(-2px);
+        }
+
+        .btn-action-secondary {
+            background: #15151c;
+            border: 1px solid var(--line-border);
+            color: var(--text-heading);
+            padding: 13px 28px;
+            border-radius: 4px;
+            font-family: var(--font-main);
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-action-secondary:hover {
+            border-color: var(--line-white);
+            background: #1c1c25;
+            transform: translateY(-2px);
+        }
+
+        .hero-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 820px;
+            margin: 56px auto 0;
+            border-top: 1px solid var(--line-white);
+            border-bottom: 1px solid var(--line-border);
+            padding: 24px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            border-right: 1px solid var(--line-border);
+            padding: 0 16px;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-num {
+            font-family: var(--font-mono);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: block;
+            line-height: 1.1;
+        }
+
+        .stat-num span {
+            color: var(--ted-red);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* =========================================
+           SECTION TITLE WRAP
+        ========================================= */
+        .section-title-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 44px;
+        }
+
+        .section-title-wrap h2 {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-heading);
+        }
+
+        .section-title-wrap h2 em {
+            font-style: italic;
+            color: var(--ted-red);
+        }
+
+        /* =========================================
+           ABOUT ACCORDION
+        ========================================= */
+        .section-speakers {
+            padding: 90px 0 100px;
+        }
+
+        .accordion-deck {
+            display: flex;
+            gap: 12px;
+            height: 480px;
+            margin-top: 16px;
+        }
+
+        .speaker-panel {
+            flex: 1;
+            border: 1px solid var(--line-border);
+            position: relative;
+            overflow: hidden;
+            background: #0d0d12;
+            transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            cursor: pointer;
+        }
+
+        .speaker-panel:hover {
+            flex: 2.7;
+            border-color: var(--ted-red);
+        }
+
+        .panel-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(7, 7, 9, 0.96) 20%, rgba(7, 7, 9, 0.35) 100%),
+                        radial-gradient(circle at center, rgba(235, 0, 40, 0.12) 0%, transparent 80%);
+            z-index: 1;
+        }
+
+        .panel-idx {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--ted-red);
+            z-index: 2;
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .panel-content h4 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+            white-space: nowrap;
+        }
+
+        .panel-content p.discipline {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--ted-red);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
+        }
+
+        .panel-content .speaker-narrative {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            max-width: 440px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            line-height: 1.55;
+        }
+
+        .speaker-panel:hover .panel-content .speaker-narrative {
+            opacity: 1;
+            max-height: 120px;
+            margin-top: 10px;
+        }
+
+        /* =========================================
+           WHAT WE DO MATRIX
+        ========================================= */
+        .section-matrix {
+            padding: 70px 0 100px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--line-border);
+            border-left: 1px solid var(--line-border);
+        }
+
+        .matrix-card {
+            padding: 44px 34px;
+            border-right: 1px solid var(--line-border);
+            border-bottom: 1px solid var(--line-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 290px;
+            transition: all 0.25s ease;
+        }
+
+        .matrix-card:hover {
+            background: rgba(235, 0, 40, 0.03);
+            border-bottom-color: var(--ted-red);
+        }
+
+        .matrix-code {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--ted-red);
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .matrix-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.25;
+            color: var(--text-heading);
+        }
+
+        .matrix-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           UPCOMING EVENT SPOTLIGHT
+        ========================================= */
+        .section-upcoming {
+            padding: 90px 0 100px;
+            background: #09090d;
+            border-top: 1px solid var(--line-border);
+        }
+
+        .upcoming-banner {
+            background: linear-gradient(135deg, rgba(235, 0, 40, 0.08) 0%, rgba(14, 14, 19, 0.95) 45%), var(--surface-panel);
+            border: 1px solid var(--line-border);
+            border-left: 4px solid var(--ted-red);
+            border-radius: 8px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upcoming-content-side {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .upcoming-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--ted-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .upcoming-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.2vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--text-heading);
+        }
+
+        .upcoming-title em {
+            font-style: italic;
+            color: var(--ted-red);
+        }
+
+        .upcoming-desc {
+            color: var(--text-body);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 620px;
+        }
+
+        .upcoming-meta-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 24px;
+        }
+
+        .meta-card h6 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .meta-card span {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: block;
+        }
+
+        .upcoming-cta-wrap {
+            margin-top: 10px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* =========================================
+           PAST EVENTS STACK
+        ========================================= */
+        .section-agenda {
+            padding: 90px 0 120px;
+            background: var(--bg-canvas);
+        }
+
+        .agenda-stack {
+            margin-top: 30px;
+        }
+
+        .agenda-node {
+            display: grid;
+            grid-template-columns: 200px 1fr 180px;
+            padding: 32px 18px;
+            border-bottom: 1px solid var(--line-border);
+            align-items: baseline;
+            transition: all 0.2s ease;
+        }
+
+        .agenda-node:first-child {
+            border-top: 1px solid var(--line-border);
+        }
+
+        .agenda-node:hover {
+            padding-left: 30px;
+            background: rgba(255, 255, 255, 0.015);
+            border-bottom-color: var(--ted-red);
+        }
+
+        .agenda-time {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--ted-red);
+            font-weight: 700;
+        }
+
+        .agenda-desc h4 {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+        }
+
+        .agenda-desc p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .agenda-venue {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           FOOTER (5-COLUMN PROPORTIONAL GRID)
+        ========================================= */
+        footer {
+            padding: 80px 0 40px;
+            background: #040406;
+            border-top: 1px solid var(--line-border);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(4, 1fr);
+            gap: 36px;
+            padding-bottom: 40px;
+        }
+
+        .footer-brand-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-main);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .footer-logo span {
+            color: var(--ted-red);
+        }
+
+        .footer-brand-desc {
+            font-size: 0.85rem;
+            line-height: 1.65;
+            color: var(--text-muted);
+            max-width: 280px;
+        }
+
+        .footer-col h5 {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-col ul li a {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            transition: color 0.2s ease, padding-left 0.2s ease;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--ted-red);
+            padding-left: 4px;
+        }
+
+        .footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        .footer-socials a {
+            display: inline-block;
+            line-height: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .footer-socials a:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-socials img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Clean copyright row */
+        .footer-sub {
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* =========================================
+           CONTACT MODAL POPUP
+        ========================================= */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 7, 9, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--surface-panel);
+            border: 1px solid var(--line-border);
+            border-top: 3px solid var(--ted-red);
+            width: 100%;
+            max-width: 460px;
+            border-radius: 8px;
+            padding: 36px 32px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            transform: translateY(15px);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-backdrop.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text-heading);
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+        }
+
+        .modal-card h3 em {
+            font-style: italic;
+            color: var(--ted-red);
+        }
+
+        .modal-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+        }
+
+        .modal-input {
+            background: #070709;
+            border: 1px solid var(--line-border);
+            color: var(--text-heading);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            padding: 13px 16px;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .modal-input:focus {
+            border-color: var(--ted-red);
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           RESPONSIVE BREAKPOINTS
+        ========================================= */
+        @media (max-width: 1100px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .upcoming-banner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 36px 28px;
+            }
+
+            .matrix-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accordion-deck {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .speaker-panel {
+                min-height: 180px;
+            }
+
+            .speaker-panel:hover {
+                flex: 1;
+            }
+
+            .speaker-panel:hover .panel-content .speaker-narrative {
+                max-height: 200px;
+                opacity: 1;
+                margin-top: 10px;
+            }
+
+            .agenda-node {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .agenda-venue {
+                text-align: left;
+            }
+
+            .nav-menu,
+            .cta-pill {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: calc(100% - 36px);
+            }
+
+            header {
+                height: 72px;
+            }
+
+            .brand-logo {
+                font-size: 1.25rem;
+            }
+
+            .mobile-menu {
+                top: 72px;
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .hero-editorial {
+                padding-top: 110px;
+                padding-bottom: 50px;
+            }
+
+            .hero-stats-strip {
+                grid-template-columns: 1fr;
+                gap: 22px;
+                margin-top: 40px;
+                padding: 20px 0;
+            }
+
+            .stat-item {
+                border-right: none;
+                border-bottom: 1px solid var(--line-border);
+                padding-bottom: 16px;
+            }
+
+            .stat-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .upcoming-meta-cards {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .hero-cta-actions,
+            .upcoming-cta-wrap {
+                flex-direction: column;
+            }
+
+            .btn-action-primary,
+            .btn-action-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .section-upcoming,
+            .section-matrix,
+            .section-speakers,
+            .section-agenda {
+                padding: 60px 0;
+            }
+
+            .section-title-wrap {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 35px;
+            }
+
+            .section-title-wrap h2 {
+                font-size: 2.1rem;
+            }
+
+            .matrix-card {
+                padding: 32px 24px;
+                min-height: 250px;
+            }
+
+            .accordion-deck {
+                margin-top: 25px;
+            }
+
+            .speaker-panel {
+                min-height: 220px;
+                padding: 24px;
+            }
+
+            .panel-content h4 {
+                font-size: 1.5rem;
+                white-space: normal;
+            }
+
+            .agenda-stack {
+                margin-top: 25px;
+            }
+
+            .agenda-node {
+                padding: 25px 10px;
+            }
+
+            .agenda-node:hover {
+                padding-left: 10px;
+            }
+
+            .agenda-desc h4 {
+                font-size: 1.2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .footer-sub {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .brand-logo {
+                font-size: 1.1rem;
+            }
+
+            .hamburger {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Spotlight -->
+    <div class="ambient-spotlight" id="spotlight"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-inner">
+            <a href="#" class="brand-logo">
+                <span class="red">TEDx</span>SunwayUniversity
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu">
+                <li><a href="#hero">Home</a></li>
+                <li class="dropdown">
+                    <a href="#about">
+                        About
+                        <span class="dropdown-arrow">▾</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#upcoming">
+                        Upcoming Event
+                        <span class="dropdown-arrow">▾</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#agenda">
+                        Past Events
+                        <span class="dropdown-arrow">▾</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+
+            <!-- Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#hero">Home</a>
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>About</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Header 01</a></li>
+                    <li><a href="#">Header 02</a></li>
+                    <li><a href="#">Header 03</a></li>
+                </ul>
+            </div>
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>Upcoming Event</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Header 01</a></li>
+                    <li><a href="#">Header 02</a></li>
+                    <li><a href="#">Header 03</a></li>
+                </ul>
+            </div>
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>Past Events</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Header 01</a></li>
+                    <li><a href="#">Header 02</a></li>
+                    <li><a href="#">Header 03</a></li>
+                </ul>
+            </div>
+
+            <a href="#contact" class="mobile-cta open-contact-modal">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section class="hero-editorial" id="hero">
+            <div class="container">
+                <div class="hero-pill-badge">
+                    <span class="dot"></span> Small Label • Category Label
+                </div>
+
+                <h1>
+                    Heading <em>Highlighted Heading.</em>
+                </h1>
+
+                <p class="hero-editorial-sub">
+                    Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                </p>
+
+                <div class="hero-cta-actions">
+                    <a href="#upcoming" class="btn-action-primary">Action Button 01 →</a>
+                    <a href="#about" class="btn-action-secondary">Action Button 02</a>
+                </div>
+
+                <div class="hero-stats-strip">
+                    <div class="stat-item">
+                        <span class="stat-num">01<span>+</span></span>
+                        <span class="stat-label">Label 01</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">02<span>+</span></span>
+                        <span class="stat-label">Label 02</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">03<span>+</span></span>
+                        <span class="stat-label">Label 03</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT TEDX SECTION -->
+        <section class="section-speakers" id="about">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <h2>About <em>TEDx</em></h2>
+                </div>
+
+                <div class="accordion-deck">
+                    <div class="speaker-panel">
+                        <div class="panel-gradient"></div>
+                        <span class="panel-idx">01</span>
+                        <div class="panel-content">
+                            <h4>Heading 01</h4>
+                            <p class="discipline">LABEL 01</p>
+                            <div class="speaker-narrative">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="speaker-panel">
+                        <div class="panel-gradient"></div>
+                        <span class="panel-idx">02</span>
+                        <div class="panel-content">
+                            <h4>Heading 02</h4>
+                            <p class="discipline">LABEL 02</p>
+                            <div class="speaker-narrative">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="speaker-panel">
+                        <div class="panel-gradient"></div>
+                        <span class="panel-idx">03</span>
+                        <div class="panel-content">
+                            <h4>Heading 03</h4>
+                            <p class="discipline">LABEL 03</p>
+                            <div class="speaker-narrative">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="speaker-panel">
+                        <div class="panel-gradient"></div>
+                        <span class="panel-idx">04</span>
+                        <div class="panel-content">
+                            <h4>Heading 04</h4>
+                            <p class="discipline">LABEL 04</p>
+                            <div class="speaker-narrative">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. WHAT WE DO MATRIX -->
+        <section class="section-matrix" id="matrix">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <h2>What We <em>Do</em></h2>
+                </div>
+
+                <div class="matrix-grid">
+                    <div class="matrix-card">
+                        <span class="matrix-code">ITEM // 01</span>
+                        <div>
+                            <h3>Heading 01</h3>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                    </div>
+
+                    <div class="matrix-card">
+                        <span class="matrix-code">ITEM // 02</span>
+                        <div>
+                            <h3>Heading 02</h3>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                    </div>
+
+                    <div class="matrix-card">
+                        <span class="matrix-code">ITEM // 03</span>
+                        <div>
+                            <h3>Heading 03</h3>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. UPCOMING EVENT SPOTLIGHT -->
+        <section class="section-upcoming" id="upcoming">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <h2>Upcoming <em>Event</em></h2>
+                </div>
+
+                <div class="upcoming-banner">
+                    <div class="upcoming-content-side">
+                        <span class="upcoming-tag">Small Label • Information</span>
+                        <h3 class="upcoming-title">Heading <em>Highlighted Heading.</em></h3>
+                        <p class="upcoming-desc">
+                            Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.
+                        </p>
+
+                        <div class="upcoming-cta-wrap">
+                            <a href="#register" class="btn-action-primary">Action Button 01 →</a>
+                            <a href="about-sunway.html" class="btn-action-secondary">Action Button 02</a>
+                        </div>
+                    </div>
+
+                    <div class="upcoming-meta-cards">
+                        <div class="meta-card">
+                            <h6>Label 01</h6>
+                            <span>Information 01</span>
+                            <small style="color: var(--text-muted); font-size: 0.8rem;">Secondary Info</small>
+                        </div>
+                        <div class="meta-card">
+                            <h6>Label 02</h6>
+                            <span>Information 02</span>
+                            <small style="color: var(--text-muted); font-size: 0.8rem;">Secondary Info</small>
+                        </div>
+                        <div class="meta-card">
+                            <h6>Label 03</h6>
+                            <span>Information 03</span>
+                            <small style="color: var(--ted-red); font-size: 0.8rem;">Secondary Info</small>
+                        </div>
+                        <div class="meta-card">
+                            <h6>Label 04</h6>
+                            <span>Information 04</span>
+                            <small style="color: var(--text-muted); font-size: 0.8rem;">Secondary Info</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PAST EVENTS ARCHIVE -->
+        <section class="section-agenda" id="agenda">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <h2>Past <em>Events</em></h2>
+                </div>
+
+                <div class="agenda-stack">
+                    <div class="agenda-node">
+                        <span class="agenda-time">2026</span>
+                        <div class="agenda-desc">
+                            <h4>Past Event 01</h4>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                        <span class="agenda-venue">Location / Venue</span>
+                    </div>
+
+                    <div class="agenda-node">
+                        <span class="agenda-time">2025</span>
+                        <div class="agenda-desc">
+                            <h4>Past Event 02</h4>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                        <span class="agenda-venue">Location / Venue</span>
+                    </div>
+
+                    <div class="agenda-node">
+                        <span class="agenda-time">2024</span>
+                        <div class="agenda-desc">
+                            <h4>Past Event 03</h4>
+                            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is editable placeholder text for your website content.</p>
+                        </div>
+                        <span class="agenda-venue">Location / Venue</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (BALANCED 5-COLUMN GRID) -->
+    <footer id="register">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand & Location -->
+                <div class="footer-brand-col">
+                    <div class="footer-logo">
+                        <span>TEDx</span>SunwayUniversity
+                    </div>
+                    <p class="footer-brand-desc">
+                        Sunway University, Bandar Sunway, Malaysia
+                    </p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/tedxsunwayuniversity/" target="_blank" rel="noopener noreferrer">
+                            <img src="insta.png" alt="Instagram">
+                        </a>
+                        <a href="https://www.linkedin.com/company/tedxsunwayuniversity/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
+                            <img src="linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Navigation Links -->
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#upcoming">Upcoming Event</a></li>
+                        <li><a href="#agenda">Past Events</a></li>
+                        <li><a href="#contact" class="open-contact-modal">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: About Links -->
+                <div class="footer-col">
+                    <h5>About</h5>
+                    <ul>
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Upcoming Event Links -->
+                <div class="footer-col">
+                    <h5>Upcoming Event</h5>
+                    <ul>
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: Past Events Links -->
+                <div class="footer-col">
+                    <h5>Past Events</h5>
+                    <ul>
+                        <li><a href="#">Header 01</a></li>
+                        <li><a href="#">Header 02</a></li>
+                        <li><a href="#">Header 03</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-sub">
+                <span>&copy; 2026 TEDx Sunway University. This independent TEDx event is operated under license from TED.</span>
+                <span>Sunway University • Bandar Sunway</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal-backdrop" id="contactModal" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeContactBtn" aria-label="Close modal">&times;</button>
+            <h3>Heading <em>Highlighted.</em></h3>
+            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="contactEmail" 
+                        class="modal-input" 
+                        placeholder="name@example.com" 
+                        required
+                    >
+                </div>
+                <button type="submit" class="cta-pill modal-submit-btn">Send Message →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const spotlight = document.getElementById("spotlight");
+        window.addEventListener("mousemove", (e) => {
+            spotlight.style.left = e.clientX + "px";
+            spotlight.style.top = e.clientY + "px";
+        });
+
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+            const isOpen = hamburger.classList.contains("active");
+            hamburger.setAttribute("aria-expanded", isOpen);
+        });
+
+        const mobileDropdowns = document.querySelectorAll(".mobile-dropdown");
+        mobileDropdowns.forEach((dropdown) => {
+            const toggle = dropdown.querySelector(".mobile-dropdown-toggle");
+            toggle.addEventListener("click", () => {
+                mobileDropdowns.forEach((other) => {
+                    if (other !== dropdown) other.classList.remove("open");
+                });
+                dropdown.classList.toggle("open");
+            });
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            const insideMenu = mobileMenu.contains(event.target);
+            const insideHamburger = hamburger.contains(event.target);
+            if (!insideMenu && !insideHamburger && mobileMenu.classList.contains("active")) {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 1024) {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            }
+        });
+
+        // Contact Modal Logic
+        const contactModal = document.getElementById("contactModal");
+        const closeContactBtn = document.getElementById("closeContactBtn");
+        const contactTriggers = document.querySelectorAll(".open-contact-modal");
+        const contactForm = document.getElementById("contactForm");
+
+        function openModal(e) {
+            if (e) e.preventDefault();
+            contactModal.classList.add("active");
+            contactModal.setAttribute("aria-hidden", "false");
+            document.getElementById("contactEmail").focus();
+        }
+
+        function closeModal() {
+            contactModal.classList.remove("active");
+            contactModal.setAttribute("aria-hidden", "true");
+        }
+
+        contactTriggers.forEach((btn) => btn.addEventListener("click", openModal));
+        closeContactBtn.addEventListener("click", closeModal);
+
+        contactModal.addEventListener("click", (e) => {
+            if (e.target === contactModal) closeModal();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && contactModal.classList.contains("active")) {
+                closeModal();
+            }
+        });
+
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("contactEmail").value;
+            alert("Thank you! We have received your email: " + email);
+            contactForm.reset();
+            closeModal();
+        });
+    </script>
+</body>
+</html>
