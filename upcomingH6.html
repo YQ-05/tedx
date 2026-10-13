@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Header 06 - Testing</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           ROOT VARIABLES
+        ========================================= */
+
+        :root {
+            --ted-red: #eb0028;
+            --ted-crimson: #a3001c;
+            --bg-canvas: #070709;
+            --surface-panel: #0d0d12;
+            --surface-panel-hover: #13131a;
+            --line-border: rgba(255, 255, 255, 0.08);
+            --line-white: rgba(255, 255, 255, 0.16);
+            --text-heading: #ffffff;
+            --text-body: #d5d5dc;
+            --text-muted: #7b7b88;
+
+            --font-display: 'Playfair Display', serif;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --max-width: 1360px;
+        }
+
+        /* =========================================
+           RESET & GLOBALS
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--text-body);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .ambient-spotlight {
+            position: fixed;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(235, 0, 40, 0.08) 0%,
+                transparent 70%
+            );
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: min(var(--max-width), calc(100% - 64px));
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================================
+           HEADER / NAVIGATION
+        ========================================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 82px;
+            z-index: 1000;
+            background: rgba(7, 7, 9, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line-border);
+        }
+
+        .nav-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            color: var(--text-heading);
+            display: flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+
+        .brand-logo span.red {
+            color: var(--ted-red);
+            font-weight: 800;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-menu > li {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu > li > a {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 0;
+        }
+
+        .nav-menu > li > a:hover {
+            color: var(--text-heading);
+        }
+
+        .dropdown-arrow {
+            font-size: 0.65rem;
+            transition: transform 0.25s ease;
+        }
+
+        .dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            background: rgba(13, 13, 18, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--line-border);
+            border-top: 2px solid var(--ted-red);
+            border-radius: 0 0 6px 6px;
+            padding: 8px 0;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 2000;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 13px 18px;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+        }
+
+        .dropdown-menu li a:hover {
+            background: rgba(235, 0, 40, 0.08);
+            color: white;
+            padding-left: 24px;
+        }
+
+        .cta-pill {
+            background: var(--ted-red);
+            color: #fff;
+            padding: 9px 22px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cta-pill:hover {
+            background: var(--ted-crimson);
+        }
+
+        .hamburger {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 8px;
+            background: transparent;
+            border: 1px solid var(--line-border);
+            border-radius: 4px;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 82px;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 7, 9, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line-border);
+            padding: 20px 32px 25px;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu > a,
+        .mobile-dropdown-toggle {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line-border);
+            transition: color 0.2s ease;
+        }
+
+        .mobile-dropdown {
+            border-bottom: 1px solid var(--line-border);
+        }
+
+        .mobile-dropdown-toggle {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-toggle .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .mobile-dropdown-menu {
+            display: none;
+            list-style: none;
+            padding: 0 0 8px 15px;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-menu {
+            display: block;
+        }
+
+        .mobile-dropdown-menu a {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 0;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-dropdown-menu a:hover {
+            color: var(--ted-red);
+        }
+
+        .mobile-menu .mobile-cta {
+            color: white;
+            background: var(--ted-red);
+            text-align: center;
+            border: none;
+            margin-top: 10px;
+            padding: 13px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           1. HERO SECTION (Editorial Split)
+        ========================================= */
+
+        .blueprint-hero {
+            padding-top: 130px;
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        .hero-grid-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 50px;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--line-border);
+            padding-bottom: 60px;
+        }
+
+        .live-indicator {
+            color: var(--ted-red);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 20px;
+        }
+
+        .live-indicator::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ted-red);
+            box-shadow: 0 0 10px var(--ted-red);
+        }
+
+        .hero-title-group h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 5.5vw, 4.8rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -1.6px;
+            color: var(--text-heading);
+            margin-bottom: 24px;
+        }
+
+        .hero-title-group h1 em {
+            font-style: italic;
+            color: var(--ted-red);
+            font-weight: 400;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-body);
+            line-height: 1.8;
+            max-width: 640px;
+        }
+
+        .hero-stats-panel {
+            background: var(--surface-panel);
+            border: 1px solid var(--line-border);
+            border-radius: 14px;
+            padding: 32px 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            position: relative;
+        }
+
+        .hero-stats-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ted-red), transparent);
+        }
+
+        .hero-stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hero-stat-val {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .hero-badge-tags {
+            grid-column: span 2;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 14px;
+            border-top: 1px solid var(--line-border);
+        }
+
+        .hero-badge-tags span {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-body);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--line-border);
+            padding: 5px 12px;
+            border-radius: 4px;
+        }
+
+        /* =========================================
+           2. VENUE ZONES (Interactive Blueprint View)
+        ========================================= */
+
+        .section-zones {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 36px;
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ted-red);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+            color: var(--text-heading);
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--ted-red);
+            font-weight: 400;
+        }
+
+        .zone-tabs-nav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--line-border);
+            padding-bottom: 14px;
+            overflow-x: auto;
+        }
+
+        .zone-tab-btn {
+            background: none;
+            border: 1px solid var(--line-border);
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .zone-tab-btn:hover {
+            color: var(--text-heading);
+            border-color: var(--line-white);
+        }
+
+        .zone-tab-btn.active {
+            background: var(--ted-red);
+            border-color: var(--ted-red);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .zone-display-panel {
+            background: var(--surface-panel);
+            border: 1px solid var(--line-border);
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .zone-main-details {
+            padding: 50px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .zone-code-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--ted-red);
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .zone-main-details h3 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+
+        .zone-main-details p {
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .zone-spec-chips {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .spec-chip {
+            border: 1px solid var(--line-border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .spec-chip-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .spec-chip-val {
+            font-family: var(--font-main);
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .zone-blueprint-visual {
+            background: radial-gradient(circle at 50% 50%, rgba(235, 0, 40, 0.08) 0%, #08080c 85%);
+            border-left: 1px solid var(--line-border);
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .blueprint-schematic {
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .schematic-indicator {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--ted-red);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .schematic-sub {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .zone-feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .zone-feature-list li {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zone-feature-list li::before {
+            content: "✓";
+            color: var(--ted-red);
+            font-weight: 700;
+        }
+
+        /* =========================================
+           3. TRANSIT & LOGISTICS (Route Cards Layout)
+        ========================================= */
+
+        .section-transit {
+            padding: 60px 0 90px;
+        }
+
+        .transit-wrapper-card {
+            border: 1px solid var(--line-border);
+            border-radius: 16px;
+            background: var(--surface-panel);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 340px 1fr;
+        }
+
+        .transit-sidebar {
+            background: #09090e;
+            padding: 40px 32px;
+            border-right: 1px solid var(--line-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .transit-sidebar h4 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+        }
+
+        .transit-sidebar p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .transit-sidebar-badge {
+            margin-top: 30px;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(235, 0, 40, 0.2);
+            background: rgba(235, 0, 40, 0.04);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-body);
+        }
+
+        .transit-options-list {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .transit-row-item {
+            background: #0a0a0f;
+            border: 1px solid var(--line-border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            display: grid;
+            grid-template-columns: 140px 1fr auto;
+            gap: 24px;
+            align-items: center;
+            transition: all 0.25s ease;
+        }
+
+        .transit-row-item:hover {
+            border-color: var(--line-white);
+            transform: translateX(4px);
+            background: #111118;
+        }
+
+        .transit-mode {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--ted-red);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .transit-mode-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-top: 4px;
+        }
+
+        .transit-desc-text {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .transit-action-link {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-heading);
+            border: 1px solid var(--line-border);
+            padding: 9px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .transit-action-link:hover {
+            border-color: var(--ted-red);
+            color: var(--ted-red);
+        }
+
+        /* =========================================
+           4. DELEGATE JOURNEY (Connected Horizontal Timeline)
+        ========================================= */
+
+        .section-journey {
+            padding: 60px 0 110px;
+        }
+
+        .journey-flow-track {
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .journey-flow-track::before {
+            content: "";
+            position: absolute;
+            top: 24px;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ted-red) 0%, rgba(235, 0, 40, 0.3) 50%, var(--ted-red) 100%);
+            z-index: 1;
+        }
+
+        .journey-track-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .journey-node-card {
+            background: var(--surface-panel);
+            border: 1px solid var(--line-border);
+            border-radius: 14px;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 290px;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .journey-node-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--line-white);
+        }
+
+        .node-pin-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .node-pin {
+            width: 32px;
+            height: 32px;
+            background: #000;
+            border: 2px solid var(--ted-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 0 12px rgba(235, 0, 40, 0.4);
+        }
+
+        .node-time {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .journey-node-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .journey-node-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .node-badge {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line-border);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--ted-red);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* =========================================
+           5. CAMPUS MAP (UNTOUCHED)
+        ========================================= */
+
+        .section-map {
+            padding: 20px 0 120px;
+        }
+
+        .map-banner {
+            background:
+                linear-gradient(
+                    145deg,
+                    #161217 0%,
+                    #0d0d12 65%
+                );
+            border: 1px solid var(--line-border);
+            border-radius: 16px;
+            padding: 55px 60px;
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 50px;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-banner::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            right: -130px;
+            top: -160px;
+            border: 1px solid rgba(235, 0, 40, 0.12);
+            border-radius: 50%;
+        }
+
+        .map-banner::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            right: -50px;
+            top: -90px;
+            border: 1px solid rgba(235, 0, 40, 0.08);
+            border-radius: 50%;
+        }
+
+        .map-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .map-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ted-red);
+            display: block;
+            margin-bottom: 14px;
+        }
+
+        .map-content h3 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .map-content h3 em {
+            font-style: italic;
+            color: var(--ted-red);
+            font-weight: 400;
+        }
+
+        .map-content p {
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.75;
+            max-width: 620px;
+        }
+
+        .map-location {
+            margin-top: 26px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line-border);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* Embedded White Map Container */
+        .map-frame-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 380px;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .map-frame-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        /* =========================================
+           MATCH FOOTER + CONTACT MODAL TO HOME PAGE
+        ========================================= */
+
+        footer,
+        .modal-backdrop {
+            --surface-panel: #0e0e13;
+            --line-border: rgba(255, 255, 255, 0.12);
+            --text-muted: #858591;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            padding: 80px 0 40px;
+            background: #040406;
+            border-top: 1px solid var(--line-border);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(4, 1fr);
+            gap: 36px;
+            padding-bottom: 40px;
+        }
+
+        .footer-brand-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-main);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .footer-logo span {
+            color: var(--ted-red);
+        }
+
+        .footer-brand-desc {
+            font-size: 0.85rem;
+            line-height: 1.65;
+            color: var(--text-muted);
+            max-width: 280px;
+        }
+
+        .footer-col h5 {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-col ul li a {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            transition: color 0.2s ease, padding-left 0.2s ease;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--ted-red);
+            padding-left: 4px;
+        }
+
+        .footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        .footer-socials a {
+            display: inline-block;
+            line-height: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .footer-socials a:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-socials img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .footer-sub {
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* =========================================
+           CONTACT MODAL POPUP
+        ========================================= */
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 7, 9, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: #0d0e12;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--ted-red);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 14px;
+            padding: 44px 38px 38px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+            transform: translateY(15px);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-backdrop.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: #6c6f7d;
+            font-size: 1.15rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text-heading);
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-display);
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-card h3 em {
+            font-style: italic;
+            color: var(--ted-red);
+            font-weight: 700;
+        }
+
+        .modal-card p {
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            color: #8b8e9b;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #7b7e8d;
+            font-weight: 500;
+        }
+
+        .modal-input {
+            background: #08080b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-heading);
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            padding: 16px 18px;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .modal-input::placeholder {
+            color: #555763;
+        }
+
+        .modal-input:focus {
+            border-color: var(--ted-red);
+            background: #0a0a0e;
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            background: var(--ted-red);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 15px 20px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-submit-btn:hover {
+            background: var(--ted-crimson);
+        }
+
+        /* =========================================
+           RESPONSIVE BREAKPOINTS
+        ========================================= */
+
+        @media (max-width: 1100px) {
+            .hero-grid-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .zone-display-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .zone-blueprint-visual {
+                border-left: none;
+                border-top: 1px solid var(--line-border);
+            }
+
+            .transit-wrapper-card {
+                grid-template-columns: 1fr;
+            }
+
+            .transit-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--line-border);
+            }
+
+            .journey-track-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journey-flow-track::before {
+                display: none;
+            }
+
+            .map-banner {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding: 44px 36px;
+            }
+
+            .map-frame-wrapper {
+                height: 340px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .nav-menu,
+            .cta-pill {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .transit-row-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .transit-options-list {
+                padding: 24px;
+            }
+
+            .journey-track-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                width: calc(100% - 36px);
+            }
+
+            header {
+                height: 72px;
+            }
+
+            .mobile-menu {
+                top: 72px;
+            }
+
+            .blueprint-hero {
+                padding-top: 100px;
+            }
+
+            .map-banner {
+                padding: 38px 24px;
+            }
+
+            .map-frame-wrapper {
+                height: 290px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-sub {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Cursor Spotlight -->
+    <div class="ambient-spotlight" id="spotlight"></div>
+
+    <!-- =========================================
+         HEADER NAVIGATION
+    ========================================= -->
+    <header>
+        <div class="container nav-inner">
+            <a href="home.html" class="brand-logo">
+                <span class="red">TEDx</span>SunwayUniversity
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <ul class="nav-menu">
+                <li><a href="home.html">Home</a></li>
+
+                <li class="dropdown">
+                    <a href="#">About <span class="dropdown-arrow">▾</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="aboutH1.html">Header 01</a></li>
+                        <li><a href="aboutH2.html">Header 02</a></li>
+                        <li><a href="aboutH3.html">Header 03</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#">Upcoming Event <span class="dropdown-arrow">▾</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="upcomingH4.html">Header 04</a></li>
+                        <li><a href="upcomingH5.html">Header 05</a></li>
+                        <li><a href="upcomingH6.html">Header 06</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#">Past Events <span class="dropdown-arrow">▾</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="pastH7.html">Header 07</a></li>
+                        <li><a href="pastH8.html">Header 08</a></li>
+                        <li><a href="pastH9.html">Header 09</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="home.html">Home</a>
+
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>About</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="aboutH1.html">Header 01</a></li>
+                    <li><a href="aboutH2.html">Header 02</a></li>
+                    <li><a href="aboutH3.html">Header 03</a></li>
+                </ul>
+            </div>
+
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>Upcoming Event</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="upcomingH4.html">Header 04</a></li>
+                    <li><a href="upcomingH5.html">Header 05</a></li>
+                    <li><a href="upcomingH6.html">Header 06</a></li>
+                </ul>
+            </div>
+
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" type="button">
+                    <span>Past Events</span>
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="pastH7.html">Header 07</a></li>
+                    <li><a href="pastH8.html">Header 08</a></li>
+                    <li><a href="pastH9.html">Header 09</a></li>
+                </ul>
+            </div>
+
+            <a href="#contact" class="mobile-cta open-contact-modal">Contact</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- =========================================
+             1. HERO SECTION (Editorial Split Layout)
+        ========================================= -->
+        <section class="blueprint-hero">
+            <div class="container">
+                <div class="hero-grid-layout">
+                    <div class="hero-title-group">
+                        <span class="live-indicator">
+                            Testing Tag 01 // Section 01
+                        </span>
+                        <h1>
+                            Testing Heading 1. <em>Highlighted Title 1.</em>
+                        </h1>
+                        <p class="hero-desc">
+                            Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
+                        </p>
+                    </div>
+
+                    <div class="hero-stats-panel">
+                        <div class="hero-stat-item">
+                            <span class="hero-stat-val">01</span>
+                            <span class="hero-stat-label">Testing Stat 01</span>
+                        </div>
+                        <div class="hero-stat-item">
+                            <span class="hero-stat-val">02</span>
+                            <span class="hero-stat-label">Testing Stat 02</span>
+                        </div>
+                        <div class="hero-badge-tags">
+                            <span>Testing Badge 01</span>
+                            <span>Testing Badge 02</span>
+                            <span>Testing Badge 03</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             2. VENUE ZONES (Interactive Blueprint View)
+        ========================================= -->
+        <section class="section-zones">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">// Testing Tag 02</span>
+                    <h2 class="section-title">
+                        Testing Heading 2. <em>Highlighted Title 2.</em>
+                    </h2>
+                </div>
+
+                <!-- Interactive Zone Switcher -->
+                <div class="zone-tabs-nav" role="tablist">
+                    <button class="zone-tab-btn active" data-zone="stage">01 // Testing Tab 01</button>
+                    <button class="zone-tab-btn" data-zone="hub">02 // Testing Tab 02</button>
+                    <button class="zone-tab-btn" data-zone="lounge">03 // Testing Tab 03</button>
+                </div>
+
+                <div class="zone-display-panel" id="zoneDisplay">
+                    <div class="zone-main-details">
+                        <div>
+                            <span class="zone-code-tag" id="zoneTag">Testing Tag 01 // 01</span>
+                            <h3 id="zoneTitle">Testing Heading 01</h3>
+                            <p id="zoneDesc">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
+                            </p>
+                        </div>
+                        <div class="zone-spec-chips">
+                            <div class="spec-chip">
+                                <span class="spec-chip-label">Testing Label 01</span>
+                                <span class="spec-chip-val" id="zoneLoc">Testing Value 01</span>
+                            </div>
+                            <div class="spec-chip">
+                                <span class="spec-chip-label">Testing Label 02</span>
+                                <span class="spec-chip-val" id="zoneAtmosphere">Testing Value 02</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zone-blueprint-visual">
+                        <div class="blueprint-schematic">
+                            <span class="schematic-indicator" id="schematicLabel">[ TESTING SCHEMATIC 01 ]</span>
+                            <span class="schematic-sub">Testing Status: Active</span>
+                        </div>
+                        <ul class="zone-feature-list" id="zoneFeatures">
+                            <li>Testing feature item 1 2 3</li>
+                            <li>Lorem ipsum dolor sit amet</li>
+                            <li>Consectetur adipiscing elit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             3. TRANSIT & LOGISTICS (Route Cards Layout)
+        ========================================= -->
+        <section class="section-transit">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">// Testing Tag 03</span>
+                    <h2 class="section-title">
+                        Testing Heading 3. <em>Highlighted Title 3.</em>
+                    </h2>
+                </div>
+
+                <div class="transit-wrapper-card">
+                    <div class="transit-sidebar">
+                        <div>
+                            <h4>Testing Sidebar Heading</h4>
+                            <p>
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus.
+                            </p>
+                        </div>
+                        <div class="transit-sidebar-badge">
+                            Testing Badge Label: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                    </div>
+
+                    <div class="transit-options-list">
+                        <!-- Transit Item 1 -->
+                        <div class="transit-row-item">
+                            <div>
+                                <span class="transit-mode">Testing // 01</span>
+                                <h5 class="transit-mode-title">Testing Heading 01</h5>
+                            </div>
+                            <p class="transit-desc-text">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
+                            </p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Sunway+University" target="_blank" rel="noopener noreferrer" class="transit-action-link">
+                                Testing Button 1 ↗
+                            </a>
+                        </div>
+
+                        <!-- Transit Item 2 -->
+                        <div class="transit-row-item">
+                            <div>
+                                <span class="transit-mode">Testing // 02</span>
+                                <h5 class="transit-mode-title">Testing Heading 02</h5>
+                            </div>
+                            <p class="transit-desc-text">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
+                            </p>
+                            <span class="transit-action-link">Testing Label 2</span>
+                        </div>
+
+                        <!-- Transit Item 3 -->
+                        <div class="transit-row-item">
+                            <div>
+                                <span class="transit-mode">Testing // 03</span>
+                                <h5 class="transit-mode-title">Testing Heading 03</h5>
+                            </div>
+                            <p class="transit-desc-text">
+                                Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
+                            </p>
+                            <span class="transit-action-link">Testing Label 3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             4. DELEGATE JOURNEY (Connected Horizontal Timeline)
+        ========================================= -->
+        <section class="section-journey">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">// Testing Tag 04</span>
+                    <h2 class="section-title">
+                        Testing Heading 4. <em>Highlighted Title 4.</em>
+                    </h2>
+                </div>
+
+                <div class="journey-flow-track">
+                    <div class="journey-track-grid">
+                        <!-- Step 1 -->
+                        <div class="journey-node-card">
+                            <div>
+                                <div class="node-pin-wrapper">
+                                    <div class="node-pin">01</div>
+                                    <span class="node-time">01 // Testing</span>
+                                </div>
+                                <h3>Testing Heading 01</h3>
+                                <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus.</p>
+                            </div>
+                            <div class="node-badge">Testing Label 01</div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="journey-node-card">
+                            <div>
+                                <div class="node-pin-wrapper">
+                                    <div class="node-pin">02</div>
+                                    <span class="node-time">02 // Testing</span>
+                                </div>
+                                <h3>Testing Heading 02</h3>
+                                <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus.</p>
+                            </div>
+                            <div class="node-badge">Testing Label 02</div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="journey-node-card">
+                            <div>
+                                <div class="node-pin-wrapper">
+                                    <div class="node-pin">03</div>
+                                    <span class="node-time">03 // Testing</span>
+                                </div>
+                                <h3>Testing Heading 03</h3>
+                                <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus.</p>
+                            </div>
+                            <div class="node-badge">Testing Label 03</div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="journey-node-card">
+                            <div>
+                                <div class="node-pin-wrapper">
+                                    <div class="node-pin">04</div>
+                                    <span class="node-time">04 // Testing</span>
+                                </div>
+                                <h3>Testing Heading 04</h3>
+                                <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus.</p>
+                            </div>
+                            <div class="node-badge">Testing Label 04</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             5. CAMPUS MAP (EMBEDDED LIVE MAP - UNTOUCHED)
+        ========================================= -->
+        <section class="section-map">
+            <div class="container">
+                <div class="map-banner">
+                    <div class="map-content">
+                        <span class="map-label">
+                            // Testing Tag 06
+                        </span>
+                        <h3>
+                            Testing Heading 5. <em>Highlighted Title 5.</em>
+                        </h3>
+                        <p>
+                            Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
+                        </p>
+                        <div class="map-location">
+                            Testing Label 1 2 3 • Location
+                        </div>
+                    </div>
+
+                    <!-- Embedded Light-Theme Map Container -->
+                    <div class="map-frame-wrapper">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Sunway%20University,%20Bandar%20Sunway&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            title="Interactive Campus Map"
+                            loading="lazy"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand-col">
+                    <div class="footer-logo">
+                        <span>TEDx</span>SunwayUniversity
+                    </div>
+                    <p class="footer-brand-desc">
+                        Sunway University, Bandar Sunway, Malaysia
+                    </p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/tedxsunwayuniversity/" target="_blank" rel="noopener noreferrer">
+                            <img src="insta.png" alt="Instagram">
+                        </a>
+                        <a href="https://www.linkedin.com/company/tedxsunwayuniversity/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
+                            <img src="linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="home.html#about">About</a></li>
+                        <li><a href="home.html#upcoming">Upcoming Event</a></li>
+                        <li><a href="home.html#agenda">Past Events</a></li>
+                        <li><a href="#contact" class="open-contact-modal">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>About</h5>
+                    <ul>
+                        <li><a href="aboutH1.html">Header 01</a></li>
+                        <li><a href="aboutH2.html">Header 02</a></li>
+                        <li><a href="aboutH3.html">Header 03</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Upcoming Event</h5>
+                    <ul>
+                        <li><a href="upcomingH4.html">Header 04</a></li>
+                        <li><a href="upcomingH5.html">Header 05</a></li>
+                        <li><a href="upcomingH6.html">Header 06</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Past Events</h5>
+                    <ul>
+                        <li><a href="pastH7.html">Header 07</a></li>
+                        <li><a href="pastH8.html">Header 08</a></li>
+                        <li><a href="pastH9.html">Header 09</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-sub">
+                <span>&copy; 2026 TEDx Sunway University. This independent TEDx event is operated under license from TED.</span>
+                <span>Sunway University • Bandar Sunway</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================
+         CONTACT MODAL
+    ========================================= -->
+    <div class="modal-backdrop" id="contactModal" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeContactBtn" aria-label="Close modal">&#x2715;</button>
+            <h3>Heading <em>Highlighted.</em></h3>
+            <p>Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactEmail">EMAIL ADDRESS</label>
+                    <input 
+                        type="email" 
+                        id="contactEmail" 
+                        class="modal-input" 
+                        placeholder="name@example.com" 
+                        required
+                    >
+                </div>
+                <button type="submit" class="modal-submit-btn">Send Message &rarr;</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+    <script>
+
+        // Ambient Cursor Spotlight
+        const spotlight = document.getElementById("spotlight");
+        window.addEventListener("mousemove", (e) => {
+            spotlight.style.left = e.clientX + "px";
+            spotlight.style.top = e.clientY + "px";
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+            const isOpen = hamburger.classList.contains("active");
+            hamburger.setAttribute("aria-expanded", isOpen);
+        });
+
+        // Mobile Dropdowns
+        const mobileDropdowns = document.querySelectorAll(".mobile-dropdown");
+        mobileDropdowns.forEach((dropdown) => {
+            const toggle = dropdown.querySelector(".mobile-dropdown-toggle");
+            toggle.addEventListener("click", () => {
+                mobileDropdowns.forEach((other) => {
+                    if (other !== dropdown) other.classList.remove("open");
+                });
+                dropdown.classList.toggle("open");
+            });
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            const insideMenu = mobileMenu.contains(event.target);
+            const insideHamburger = hamburger.contains(event.target);
+            if (!insideMenu && !insideHamburger && mobileMenu.classList.contains("active")) {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 1024) {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                hamburger.setAttribute("aria-expanded", "false");
+                mobileDropdowns.forEach((d) => d.classList.remove("open"));
+            }
+        });
+
+        // Contact Modal Logic
+        const contactModal = document.getElementById("contactModal");
+        const closeContactBtn = document.getElementById("closeContactBtn");
+        const contactTriggers = document.querySelectorAll(".open-contact-modal");
+        const contactForm = document.getElementById("contactForm");
+
+        function openModal(e) {
+            if (e) e.preventDefault();
+            contactModal.classList.add("active");
+            contactModal.setAttribute("aria-hidden", "false");
+            document.getElementById("contactEmail").focus();
+        }
+
+        function closeModal() {
+            contactModal.classList.remove("active");
+            contactModal.setAttribute("aria-hidden", "true");
+        }
+
+        contactTriggers.forEach((btn) => btn.addEventListener("click", openModal));
+        closeContactBtn.addEventListener("click", closeModal);
+
+        contactModal.addEventListener("click", (e) => {
+            if (e.target === contactModal) closeModal();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && contactModal.classList.contains("active")) {
+                closeModal();
+            }
+        });
+
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("contactEmail").value;
+            alert("Message sent: " + email);
+            contactForm.reset();
+            closeModal();
+        });
+
+        // Interactive Zone Switcher Data (Updated to Placeholder Text)
+        const zoneData = {
+            stage: {
+                tag: "Testing Tag 01 // 01",
+                title: "Testing Heading 01",
+                desc: "Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.",
+                loc: "Testing Value 01",
+                atmosphere: "Testing Value 02",
+                schematic: "[ TESTING SCHEMATIC 01 ]",
+                features: [
+                    "Testing feature item 1 2 3",
+                    "Lorem ipsum dolor sit amet",
+                    "Consectetur adipiscing elit"
+                ]
+            },
+            hub: {
+                tag: "Testing Tag 02 // 02",
+                title: "Testing Heading 02",
+                desc: "Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.",
+                loc: "Testing Value 03",
+                atmosphere: "Testing Value 04",
+                schematic: "[ TESTING SCHEMATIC 02 ]",
+                features: [
+                    "Testing feature item 1 2 3",
+                    "Lorem ipsum dolor sit amet",
+                    "Consectetur adipiscing elit"
+                ]
+            },
+            lounge: {
+                tag: "Testing Tag 03 // 03",
+                title: "Testing Heading 03",
+                desc: "Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.",
+                loc: "Testing Value 05",
+                atmosphere: "Testing Value 06",
+                schematic: "[ TESTING SCHEMATIC 03 ]",
+                features: [
+                    "Testing feature item 1 2 3",
+                    "Lorem ipsum dolor sit amet",
+                    "Consectetur adipiscing elit"
+                ]
+            }
+        };
+
+        const tabButtons = document.querySelectorAll(".zone-tab-btn");
+        const zoneTag = document.getElementById("zoneTag");
+        const zoneTitle = document.getElementById("zoneTitle");
+        const zoneDesc = document.getElementById("zoneDesc");
+        const zoneLoc = document.getElementById("zoneLoc");
+        const zoneAtmosphere = document.getElementById("zoneAtmosphere");
+        const schematicLabel = document.getElementById("schematicLabel");
+        const zoneFeatures = document.getElementById("zoneFeatures");
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                tabButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const key = btn.getAttribute("data-zone");
+                const data = zoneData[key];
+
+                zoneTag.textContent = data.tag;
+                zoneTitle.textContent = data.title;
+                zoneDesc.textContent = data.desc;
+                zoneLoc.textContent = data.loc;
+                zoneAtmosphere.textContent = data.atmosphere;
+                schematicLabel.textContent = data.schematic;
+
+                zoneFeatures.innerHTML = data.features.map(f => `<li>${f}</li>`).join("");
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
