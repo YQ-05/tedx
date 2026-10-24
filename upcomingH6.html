@@ -4,22 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Header 06 - Testing</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-
         /* =========================================
            ROOT VARIABLES
         ========================================= */
-
         :root {
             --ted-red: #eb0028;
             --ted-crimson: #a3001c;
@@ -31,18 +26,15 @@
             --text-heading: #ffffff;
             --text-body: #d5d5dc;
             --text-muted: #7b7b88;
-
             --font-display: 'Playfair Display', serif;
             --font-main: 'Space Grotesk', sans-serif;
             --font-mono: 'Space Mono', monospace;
-
             --max-width: 1360px;
         }
 
         /* =========================================
            RESET & GLOBALS
         ========================================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -91,7 +83,6 @@
         /* =========================================
            HEADER / NAVIGATION
         ========================================= */
-
         header {
             position: fixed;
             top: 0;
@@ -120,6 +111,7 @@
             display: flex;
             align-items: baseline;
             gap: 3px;
+            white-space: nowrap;
         }
 
         .brand-logo span.red {
@@ -190,6 +182,16 @@
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
         }
 
+        .dropdown-menu::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            display: block;
+        }
+
         .dropdown:hover .dropdown-menu {
             opacity: 1;
             visibility: visible;
@@ -213,6 +215,13 @@
             padding-left: 24px;
         }
 
+        /* Right Actions Wrapper */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .cta-pill {
             background: var(--ted-red);
             color: #fff;
@@ -227,6 +236,7 @@
             border: none;
             display: inline-flex;
             align-items: center;
+            white-space: nowrap;
         }
 
         .cta-pill:hover {
@@ -352,12 +362,16 @@
             padding: 13px 20px;
             border-radius: 4px;
             cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
         }
 
         /* =========================================
            1. HERO SECTION (Editorial Split)
         ========================================= */
-
         .blueprint-hero {
             padding-top: 130px;
             padding-bottom: 80px;
@@ -482,7 +496,6 @@
         /* =========================================
            2. VENUE ZONES (Interactive Blueprint View)
         ========================================= */
-
         .section-zones {
             padding: 80px 0;
         }
@@ -688,7 +701,6 @@
         /* =========================================
            3. TRANSIT & LOGISTICS (Route Cards Layout)
         ========================================= */
-
         .section-transit {
             padding: 60px 0 90px;
         }
@@ -800,7 +812,6 @@
         /* =========================================
            4. DELEGATE JOURNEY (Connected Horizontal Timeline)
         ========================================= */
-
         .section-journey {
             padding: 60px 0 110px;
         }
@@ -904,20 +915,14 @@
         }
 
         /* =========================================
-           5. CAMPUS MAP (UNTOUCHED)
+           5. CAMPUS MAP
         ========================================= */
-
         .section-map {
             padding: 20px 0 120px;
         }
 
         .map-banner {
-            background:
-                linear-gradient(
-                    145deg,
-                    #161217 0%,
-                    #0d0d12 65%
-                );
+            background: linear-gradient(145deg, #161217 0%, #0d0d12 65%);
             border: 1px solid var(--line-border);
             border-radius: 16px;
             padding: 55px 60px;
@@ -999,7 +1004,6 @@
             letter-spacing: 0.8px;
         }
 
-        /* Embedded White Map Container */
         .map-frame-wrapper {
             position: relative;
             z-index: 2;
@@ -1020,19 +1024,14 @@
         }
 
         /* =========================================
-           MATCH FOOTER + CONTACT MODAL TO HOME PAGE
+           FOOTER
         ========================================= */
-
         footer,
         .modal-backdrop {
             --surface-panel: #0e0e13;
             --line-border: rgba(255, 255, 255, 0.12);
             --text-muted: #858591;
         }
-
-        /* =========================================
-           FOOTER
-        ========================================= */
 
         footer {
             padding: 80px 0 40px;
@@ -1139,7 +1138,6 @@
         /* =========================================
            CONTACT MODAL POPUP
         ========================================= */
-
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -1245,6 +1243,7 @@
             border-radius: 6px;
             outline: none;
             transition: border-color 0.2s ease, background 0.2s ease;
+            width: 100%;
         }
 
         .modal-input::placeholder {
@@ -1282,7 +1281,6 @@
         /* =========================================
            RESPONSIVE BREAKPOINTS
         ========================================= */
-
         @media (max-width: 1100px) {
             .hero-grid-layout {
                 grid-template-columns: 1fr;
@@ -1332,7 +1330,7 @@
 
         @media (max-width: 1024px) {
             .nav-menu,
-            .cta-pill {
+            .nav-actions .cta-pill {
                 display: none;
             }
 
@@ -1365,8 +1363,14 @@
                 height: 72px;
             }
 
+            .brand-logo {
+                font-size: 1.25rem;
+            }
+
             .mobile-menu {
                 top: 72px;
+                padding-left: 18px;
+                padding-right: 18px;
             }
 
             .blueprint-hero {
@@ -1383,6 +1387,7 @@
 
             .footer-grid {
                 grid-template-columns: 1fr;
+                gap: 32px;
             }
 
             .footer-sub {
@@ -1392,6 +1397,16 @@
             }
         }
 
+        @media (max-width: 380px) {
+            .brand-logo {
+                font-size: 1.1rem;
+            }
+
+            .hamburger {
+                width: 38px;
+                height: 38px;
+            }
+        }
     </style>
 </head>
 
@@ -1400,9 +1415,7 @@
     <!-- Ambient Cursor Spotlight -->
     <div class="ambient-spotlight" id="spotlight"></div>
 
-    <!-- =========================================
-         HEADER NAVIGATION
-    ========================================= -->
+    <!-- Header Navigation -->
     <header>
         <div class="container nav-inner">
             <a href="home.html" class="brand-logo">
@@ -1441,14 +1454,17 @@
                 </li>
             </ul>
 
-            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+            <!-- Right Actions Wrapper -->
+            <div class="nav-actions">
+                <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
 
-            <!-- Hamburger Button -->
-            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <!-- Hamburger Button -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu -->
@@ -1496,10 +1512,7 @@
     </header>
 
     <main>
-
-        <!-- =========================================
-             1. HERO SECTION (Editorial Split Layout)
-        ========================================= -->
+        <!-- 1. HERO SECTION -->
         <section class="blueprint-hero">
             <div class="container">
                 <div class="hero-grid-layout">
@@ -1534,9 +1547,7 @@
             </div>
         </section>
 
-        <!-- =========================================
-             2. VENUE ZONES (Interactive Blueprint View)
-        ========================================= -->
+        <!-- 2. VENUE ZONES -->
         <section class="section-zones">
             <div class="container">
                 <div class="section-header">
@@ -1546,7 +1557,6 @@
                     </h2>
                 </div>
 
-                <!-- Interactive Zone Switcher -->
                 <div class="zone-tabs-nav" role="tablist">
                     <button class="zone-tab-btn active" data-zone="stage">01 // Testing Tab 01</button>
                     <button class="zone-tab-btn" data-zone="hub">02 // Testing Tab 02</button>
@@ -1589,9 +1599,7 @@
             </div>
         </section>
 
-        <!-- =========================================
-             3. TRANSIT & LOGISTICS (Route Cards Layout)
-        ========================================= -->
+        <!-- 3. TRANSIT & LOGISTICS -->
         <section class="section-transit">
             <div class="container">
                 <div class="section-header">
@@ -1615,7 +1623,6 @@
                     </div>
 
                     <div class="transit-options-list">
-                        <!-- Transit Item 1 -->
                         <div class="transit-row-item">
                             <div>
                                 <span class="transit-mode">Testing // 01</span>
@@ -1629,7 +1636,6 @@
                             </a>
                         </div>
 
-                        <!-- Transit Item 2 -->
                         <div class="transit-row-item">
                             <div>
                                 <span class="transit-mode">Testing // 02</span>
@@ -1641,7 +1647,6 @@
                             <span class="transit-action-link">Testing Label 2</span>
                         </div>
 
-                        <!-- Transit Item 3 -->
                         <div class="transit-row-item">
                             <div>
                                 <span class="transit-mode">Testing // 03</span>
@@ -1657,9 +1662,7 @@
             </div>
         </section>
 
-        <!-- =========================================
-             4. DELEGATE JOURNEY (Connected Horizontal Timeline)
-        ========================================= -->
+        <!-- 4. DELEGATE JOURNEY -->
         <section class="section-journey">
             <div class="container">
                 <div class="section-header">
@@ -1671,7 +1674,6 @@
 
                 <div class="journey-flow-track">
                     <div class="journey-track-grid">
-                        <!-- Step 1 -->
                         <div class="journey-node-card">
                             <div>
                                 <div class="node-pin-wrapper">
@@ -1684,7 +1686,6 @@
                             <div class="node-badge">Testing Label 01</div>
                         </div>
 
-                        <!-- Step 2 -->
                         <div class="journey-node-card">
                             <div>
                                 <div class="node-pin-wrapper">
@@ -1697,7 +1698,6 @@
                             <div class="node-badge">Testing Label 02</div>
                         </div>
 
-                        <!-- Step 3 -->
                         <div class="journey-node-card">
                             <div>
                                 <div class="node-pin-wrapper">
@@ -1710,7 +1710,6 @@
                             <div class="node-badge">Testing Label 03</div>
                         </div>
 
-                        <!-- Step 4 -->
                         <div class="journey-node-card">
                             <div>
                                 <div class="node-pin-wrapper">
@@ -1727,16 +1726,12 @@
             </div>
         </section>
 
-        <!-- =========================================
-             5. CAMPUS MAP (EMBEDDED LIVE MAP - UNTOUCHED)
-        ========================================= -->
+        <!-- 5. CAMPUS MAP -->
         <section class="section-map">
             <div class="container">
                 <div class="map-banner">
                     <div class="map-content">
-                        <span class="map-label">
-                            // Testing Tag 06
-                        </span>
+                        <span class="map-label">// Testing Tag 06</span>
                         <h3>
                             Testing Heading 5. <em>Highlighted Title 5.</em>
                         </h3>
@@ -1748,7 +1743,6 @@
                         </div>
                     </div>
 
-                    <!-- Embedded Light-Theme Map Container -->
                     <div class="map-frame-wrapper">
                         <iframe
                             src="https://maps.google.com/maps?q=Sunway%20University,%20Bandar%20Sunway&t=&z=16&ie=UTF8&iwloc=&output=embed"
@@ -1760,12 +1754,9 @@
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- =========================================
-         FOOTER
-    ========================================= -->
+    <!-- FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -1832,9 +1823,7 @@
         </div>
     </footer>
 
-    <!-- =========================================
-         CONTACT MODAL
-    ========================================= -->
+    <!-- CONTACT MODAL -->
     <div class="modal-backdrop" id="contactModal" aria-hidden="true">
         <div class="modal-card">
             <button class="modal-close-btn" id="closeContactBtn" aria-label="Close modal">&#x2715;</button>
@@ -1857,11 +1846,8 @@
         </div>
     </div>
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================= -->
+    <!-- JAVASCRIPT -->
     <script>
-
         // Ambient Cursor Spotlight
         const spotlight = document.getElementById("spotlight");
         window.addEventListener("mousemove", (e) => {
@@ -1932,12 +1918,14 @@
             if (e) e.preventDefault();
             contactModal.classList.add("active");
             contactModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
             document.getElementById("contactEmail").focus();
         }
 
         function closeModal() {
             contactModal.classList.remove("active");
             contactModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
         }
 
         contactTriggers.forEach((btn) => btn.addEventListener("click", openModal));
@@ -1961,7 +1949,7 @@
             closeModal();
         });
 
-        // Interactive Zone Switcher Data (Updated to Placeholder Text)
+        // Interactive Zone Switcher Data
         const zoneData = {
             stage: {
                 tag: "Testing Tag 01 // 01",
@@ -2031,9 +2019,6 @@
                 zoneFeatures.innerHTML = data.features.map(f => `<li>${f}</li>`).join("");
             });
         });
-
     </script>
-
 </body>
-
 </html>

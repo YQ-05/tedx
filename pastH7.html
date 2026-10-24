@@ -4,22 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Header 07</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-
         /* =========================================
            ROOT VARIABLES
         ========================================= */
-
         :root {
             --ted-red: #eb0028;
             --ted-crimson: #a3001c;
@@ -31,19 +26,15 @@
             --text-heading: #ffffff;
             --text-body: #d5d5dc;
             --text-muted: #7b7b88;
-
             --font-display: 'Playfair Display', serif;
             --font-main: 'Space Grotesk', sans-serif;
             --font-mono: 'Space Mono', monospace;
-
             --max-width: 1360px;
         }
-
 
         /* =========================================
            RESET & GLOBALS
         ========================================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -89,11 +80,9 @@
             z-index: 2;
         }
 
-
         /* =========================================
            HEADER / NAVIGATION
         ========================================= */
-
         header {
             position: fixed;
             top: 0;
@@ -101,12 +90,9 @@
             width: 100%;
             height: 82px;
             z-index: 1000;
-
             background: rgba(7, 7, 9, 0.85);
-
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-
             border-bottom: 1px solid var(--line-border);
         }
 
@@ -122,10 +108,10 @@
             font-weight: 700;
             letter-spacing: -0.6px;
             color: var(--text-heading);
-
             display: flex;
             align-items: baseline;
             gap: 3px;
+            white-space: nowrap;
         }
 
         .brand-logo span.red {
@@ -154,9 +140,7 @@
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.8px;
-
             transition: color 0.2s ease;
-
             display: flex;
             align-items: center;
             gap: 7px;
@@ -181,44 +165,30 @@
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-
             width: 240px;
-
             background: rgba(13, 13, 18, 0.98);
-
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-
             border: 1px solid var(--line-border);
             border-top: 2px solid var(--ted-red);
-
             border-radius: 0 0 6px 6px;
-
             padding: 8px 0;
-
             list-style: none;
-
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-
             transition: opacity 0.2s ease, visibility 0.2s ease;
-
             z-index: 2000;
-
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
         }
 
         .dropdown-menu::before {
             content: "";
-
             position: absolute;
             top: -15px;
             left: 0;
-
             width: 100%;
             height: 15px;
-
             display: block;
         }
 
@@ -245,6 +215,13 @@
             padding-left: 24px;
         }
 
+        /* Right Actions Wrapper */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .cta-pill {
             background: var(--ted-red);
             color: #fff;
@@ -259,6 +236,7 @@
             border: none;
             display: inline-flex;
             align-items: center;
+            white-space: nowrap;
         }
 
         .cta-pill:hover {
@@ -384,12 +362,16 @@
             padding: 13px 20px;
             border-radius: 4px;
             cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
         }
 
         /* =========================================
            CONTACT MODAL POPUP
         ========================================= */
-
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -495,6 +477,7 @@
             border-radius: 6px;
             outline: none;
             transition: border-color 0.2s ease, background 0.2s ease;
+            width: 100%;
         }
 
         .modal-input::placeholder {
@@ -529,11 +512,9 @@
             background: var(--ted-crimson);
         }
 
-
         /* =========================================
            1. HERO SECTION
         ========================================= */
-
         .archive-hero {
             padding-top: 110px;
             padding-bottom: 70px;
@@ -592,11 +573,9 @@
             line-height: 1.75;
         }
 
-
         /* =========================================
            2. DATA RIBBON / IMPACT METRICS
         ========================================= */
-
         .section-metrics {
             padding: 20px 0 60px;
         }
@@ -639,11 +618,9 @@
             letter-spacing: 1px;
         }
 
-
         /* =========================================
            3. PAST EDITIONS DOSSIER
         ========================================= */
-
         .section-editions {
             padding: 40px 0 80px;
         }
@@ -740,11 +717,9 @@
             justify-content: space-between;
         }
 
-
         /* =========================================
            4. CURATED TALKS VAULT
         ========================================= */
-
         .section-vault {
             padding: 40px 0 80px;
         }
@@ -825,11 +800,9 @@
             margin-top: 6px;
         }
 
-
         /* =========================================
            5. FINAL SECTION — MASTER ARCHIVE LEDGER
         ========================================= */
-
         .section-archive-index {
             padding: 40px 0 120px;
         }
@@ -916,19 +889,14 @@
         }
 
         /* =========================================
-           MATCH FOOTER + CONTACT MODAL TO HOME PAGE
+           FOOTER
         ========================================= */
-
         footer,
         .modal-backdrop {
             --surface-panel: #0e0e13;
             --line-border: rgba(255, 255, 255, 0.12);
             --text-muted: #858591;
         }
-
-        /* =========================================
-           FOOTER
-        ========================================= */
 
         footer {
             padding: 80px 0 40px;
@@ -1032,13 +1000,10 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-
         /* =========================================
            RESPONSIVE BREAKPOINTS
         ========================================= */
-
         @media (max-width: 1100px) {
-
             .metrics-strip {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1065,11 +1030,9 @@
             }
         }
 
-
         @media (max-width: 1024px) {
-
             .nav-menu,
-            .cta-pill {
+            .nav-actions .cta-pill {
                 display: none;
             }
 
@@ -1078,9 +1041,7 @@
             }
         }
 
-
         @media (max-width: 900px) {
-
             .index-header-row {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1088,15 +1049,17 @@
             }
         }
 
-
         @media (max-width: 650px) {
-
             .container {
                 width: calc(100% - 36px);
             }
 
             header {
                 height: 72px;
+            }
+
+            .brand-logo {
+                font-size: 1.25rem;
             }
 
             .mobile-menu {
@@ -1121,11 +1084,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .index-footer-meta {
-                flex-direction: column;
-                gap: 8px;
-            }
-
             .footer-grid {
                 grid-template-columns: 1fr;
             }
@@ -1137,573 +1095,244 @@
             }
         }
 
+        @media (max-width: 380px) {
+            .brand-logo {
+                font-size: 1.1rem;
+            }
+
+            .hamburger {
+                width: 38px;
+                height: 38px;
+            }
+        }
     </style>
 </head>
-
 
 <body>
 
     <!-- Ambient Cursor Spotlight -->
     <div class="ambient-spotlight" id="spotlight"></div>
 
-
-    <!-- =========================================
-         HEADER NAVIGATION
-    ========================================= -->
-
+    <!-- Header Navigation -->
     <header>
-
         <div class="container nav-inner">
-
             <a href="home.html" class="brand-logo">
                 <span class="red">TEDx</span>SunwayUniversity
             </a>
 
-
             <!-- Desktop Nav Links -->
-
             <ul class="nav-menu">
-
-                <li>
-                    <a href="home.html">Home</a>
-                </li>
-
+                <li><a href="home.html">Home</a></li>
 
                 <li class="dropdown">
-
-                    <a href="#">
-                        About
-                        <span class="dropdown-arrow">▾</span>
-                    </a>
-
+                    <a href="#">About <span class="dropdown-arrow">▾</span></a>
                     <ul class="dropdown-menu">
-
-                        <li>
-                            <a href="aboutH1.html">Header 01</a>
-                        </li>
-
-                        <li>
-                            <a href="aboutH2.html">Header 02</a>
-                        </li>
-
-                        <li>
-                            <a href="aboutH3.html">Header 03</a>
-                        </li>
-
+                        <li><a href="aboutH1.html">Header 01</a></li>
+                        <li><a href="aboutH2.html">Header 02</a></li>
+                        <li><a href="aboutH3.html">Header 03</a></li>
                     </ul>
-
                 </li>
-
 
                 <li class="dropdown">
-
-                    <a href="#">
-                        Upcoming Event
-                        <span class="dropdown-arrow">▾</span>
-                    </a>
-
+                    <a href="#">Upcoming Event <span class="dropdown-arrow">▾</span></a>
                     <ul class="dropdown-menu">
-
-                        <li>
-                            <a href="upcomingH4.html">Header 04</a>
-                        </li>
-
-                        <li>
-                            <a href="upcomingH5.html">Header 05</a>
-                        </li>
-
-                        <li>
-                            <a href="upcomingH6.html">Header 06</a>
-                        </li>
-
+                        <li><a href="upcomingH4.html">Header 04</a></li>
+                        <li><a href="upcomingH5.html">Header 05</a></li>
+                        <li><a href="upcomingH6.html">Header 06</a></li>
                     </ul>
-
                 </li>
-
 
                 <li class="dropdown">
-
-                    <a href="#">
-                        Past Events
-                        <span class="dropdown-arrow">▾</span>
-                    </a>
-
+                    <a href="#">Past Events <span class="dropdown-arrow">▾</span></a>
                     <ul class="dropdown-menu">
-
-                        <li>
-                            <a href="pastH7.html">Header 07</a>
-                        </li>
-
-                        <li>
-                            <a href="pastH8.html">Header 08</a>
-                        </li>
-
-                        <li>
-                            <a href="pastH9.html">Header 09</a>
-                        </li>
-
+                        <li><a href="pastH7.html">Header 07</a></li>
+                        <li><a href="pastH8.html">Header 08</a></li>
+                        <li><a href="pastH9.html">Header 09</a></li>
                     </ul>
-
                 </li>
-
             </ul>
 
+            <!-- Right Actions Wrapper -->
+            <div class="nav-actions">
+                <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
 
-            <a href="#contact" class="cta-pill open-contact-modal">
-                Contact
-            </a>
-
-
-            <!-- Hamburger Button -->
-
-            <button
-                class="hamburger"
-                id="hamburger"
-                aria-label="Open menu"
-                aria-expanded="false"
-            >
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
-
+                <!-- Hamburger Button -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
-
 
         <!-- Mobile Menu -->
-
         <div class="mobile-menu" id="mobileMenu">
-
             <a href="home.html">Home</a>
 
-
             <div class="mobile-dropdown">
-
-                <button
-                    class="mobile-dropdown-toggle"
-                    type="button"
-                >
-
+                <button class="mobile-dropdown-toggle" type="button">
                     <span>About</span>
-
                     <span class="dropdown-arrow">▾</span>
-
                 </button>
-
-
                 <ul class="mobile-dropdown-menu">
-
-                    <li>
-                        <a href="aboutH1.html">Header 01</a>
-                    </li>
-
-                    <li>
-                        <a href="aboutH2.html">Header 02</a>
-                    </li>
-
-                    <li>
-                        <a href="aboutH3.html">Header 03</a>
-                    </li>
-
+                    <li><a href="aboutH1.html">Header 01</a></li>
+                    <li><a href="aboutH2.html">Header 02</a></li>
+                    <li><a href="aboutH3.html">Header 03</a></li>
                 </ul>
-
             </div>
 
-
             <div class="mobile-dropdown">
-
-                <button
-                    class="mobile-dropdown-toggle"
-                    type="button"
-                >
-
+                <button class="mobile-dropdown-toggle" type="button">
                     <span>Upcoming Event</span>
-
                     <span class="dropdown-arrow">▾</span>
-
                 </button>
-
-
                 <ul class="mobile-dropdown-menu">
-
-                    <li>
-                        <a href="upcomingH4.html">Header 04</a>
-                    </li>
-
-                    <li>
-                        <a href="upcomingH5.html">Header 05</a>
-                    </li>
-
-                    <li>
-                        <a href="upcomingH6.html">Header 06</a>
-                    </li>
-
+                    <li><a href="upcomingH4.html">Header 04</a></li>
+                    <li><a href="upcomingH5.html">Header 05</a></li>
+                    <li><a href="upcomingH6.html">Header 06</a></li>
                 </ul>
-
             </div>
-
 
             <div class="mobile-dropdown">
-
-                <button
-                    class="mobile-dropdown-toggle"
-                    type="button"
-                >
-
+                <button class="mobile-dropdown-toggle" type="button">
                     <span>Past Events</span>
-
                     <span class="dropdown-arrow">▾</span>
-
                 </button>
-
-
                 <ul class="mobile-dropdown-menu">
-
-                    <li>
-                        <a href="pastH7.html">Header 07</a>
-                    </li>
-
-                    <li>
-                        <a href="pastH8.html">Header 08</a>
-                    </li>
-
-                    <li>
-                        <a href="pastH9.html">Header 09</a>
-                    </li>
-
+                    <li><a href="pastH7.html">Header 07</a></li>
+                    <li><a href="pastH8.html">Header 08</a></li>
+                    <li><a href="pastH9.html">Header 09</a></li>
                 </ul>
-
             </div>
 
-
-            <a href="#contact" class="mobile-cta open-contact-modal">
-                Contact
-            </a>
-
+            <a href="#contact" class="mobile-cta open-contact-modal">Contact</a>
         </div>
-
     </header>
 
-
     <main>
-
-
-        <!-- =========================================
-             1. HERO SECTION
-        ========================================= -->
-
+        <!-- 1. HERO SECTION -->
         <section class="archive-hero">
-
             <div class="container">
-
                 <div class="hero-meta-bar">
-
-                    <span class="archive-tag">
-                        Testing Tag 01 // Section 01
-                    </span>
-
+                    <span class="archive-tag">Testing Tag 01 // Section 01</span>
                 </div>
-
 
                 <div class="hero-title-group">
-
                     <h1>
-                        Testing Heading 1.
-                        <em>Highlighted Title 1.</em>
+                        Testing Heading 1. <em>Highlighted Title 1.</em>
                     </h1>
-
-
                     <p class="hero-desc">
-
                         Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
-
                     </p>
-
                 </div>
-
             </div>
-
         </section>
 
-
-
-        <!-- =========================================
-             2. DATA RIBBON / IMPACT METRICS
-        ========================================= -->
-
+        <!-- 2. DATA RIBBON / IMPACT METRICS -->
         <section class="section-metrics">
-
             <div class="container">
-
                 <div class="metrics-strip">
-
                     <div class="metric-cell">
-
-                        <div class="metric-num">
-                            12<span>+</span>
-                        </div>
-
-                        <div class="metric-label">
-                            Testing Stat 01
-                        </div>
-
+                        <div class="metric-num">12<span>+</span></div>
+                        <div class="metric-label">Testing Stat 01</div>
                     </div>
-
-
                     <div class="metric-cell">
-
-                        <div class="metric-num">
-                            03<span>/</span>03
-                        </div>
-
-                        <div class="metric-label">
-                            Testing Stat 02
-                        </div>
-
+                        <div class="metric-num">03<span>/</span>03</div>
+                        <div class="metric-label">Testing Stat 02</div>
                     </div>
-
-
                     <div class="metric-cell">
-
-                        <div class="metric-num">
-                            500<span>+</span>
-                        </div>
-
-                        <div class="metric-label">
-                            Testing Stat 03
-                        </div>
-
+                        <div class="metric-num">500<span>+</span></div>
+                        <div class="metric-label">Testing Stat 03</div>
                     </div>
-
-
                     <div class="metric-cell">
-
-                        <div class="metric-num">
-                            80<span>%</span>
-                        </div>
-
-                        <div class="metric-label">
-                            Testing Stat 04
-                        </div>
-
+                        <div class="metric-num">80<span>%</span></div>
+                        <div class="metric-label">Testing Stat 04</div>
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
-
-
-        <!-- =========================================
-             3. PAST EDITIONS DOSSIER
-        ========================================= -->
-
+        <!-- 3. PAST EDITIONS DOSSIER -->
         <section class="section-editions">
-
             <div class="container">
-
                 <div class="section-header">
-
-                    <span class="section-tag">
-                        // Testing Tag 02
-                    </span>
-
+                    <span class="section-tag">// Testing Tag 02</span>
                     <h2 class="section-title">
                         Testing Heading 2. <em>Highlighted Title 2.</em>
                     </h2>
-
                 </div>
-
 
                 <div class="editions-grid">
-
-
                     <!-- Edition 01 -->
-
                     <div class="edition-card">
-
                         <div>
-
                             <div class="edition-meta">
-
-                                <span>
-                                    Testing Label 01 // 01
-                                </span>
-
-                                <span class="edition-year">
-                                    0001
-                                </span>
-
+                                <span>Testing Label 01 // 01</span>
+                                <span class="edition-year">0001</span>
                             </div>
-
-
-                            <h3 class="edition-title">
-                                Testing Heading 01
-                            </h3>
-
-
+                            <h3 class="edition-title">Testing Heading 01</h3>
                             <p class="edition-desc">
-
                                 Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
-
                             </p>
-
                         </div>
-
-
                         <div class="edition-footer">
-
-                            <span>
-                                Testing Label 1 2 3
-                            </span>
-
-                            <span>
-                                Testing Label 01
-                            </span>
-
+                            <span>Testing Label 1 2 3</span>
+                            <span>Testing Label 01</span>
                         </div>
-
                     </div>
-
-
 
                     <!-- Edition 02 -->
-
                     <div class="edition-card">
-
                         <div>
-
                             <div class="edition-meta">
-
-                                <span>
-                                    Testing Label 02 // 02
-                                </span>
-
-                                <span class="edition-year">
-                                    0002
-                                </span>
-
+                                <span>Testing Label 02 // 02</span>
+                                <span class="edition-year">0002</span>
                             </div>
-
-
-                            <h3 class="edition-title">
-                                Testing Heading 02
-                            </h3>
-
-
+                            <h3 class="edition-title">Testing Heading 02</h3>
                             <p class="edition-desc">
-
                                 Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
-
                             </p>
-
                         </div>
-
-
                         <div class="edition-footer">
-
-                            <span>
-                                Testing Label 1 2 3
-                            </span>
-
-                            <span>
-                                Testing Label 02
-                            </span>
-
+                            <span>Testing Label 1 2 3</span>
+                            <span>Testing Label 02</span>
                         </div>
-
                     </div>
-
-
 
                     <!-- Edition 03 -->
-
                     <div class="edition-card">
-
                         <div>
-
                             <div class="edition-meta">
-
-                                <span>
-                                    Testing Label 03 // 03
-                                </span>
-
-                                <span class="edition-year">
-                                    0003
-                                </span>
-
+                                <span>Testing Label 03 // 03</span>
+                                <span class="edition-year">0003</span>
                             </div>
-
-
-                            <h3 class="edition-title">
-                                Testing Heading 03
-                            </h3>
-
-
+                            <h3 class="edition-title">Testing Heading 03</h3>
                             <p class="edition-desc">
-
                                 Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem, vitae facilisis lorem ipsum sed lorem.
-
                             </p>
-
                         </div>
-
-
                         <div class="edition-footer">
-
-                            <span>
-                                Testing Label 1 2 3
-                            </span>
-
-                            <span>
-                                Testing Label 03
-                            </span>
-
+                            <span>Testing Label 1 2 3</span>
+                            <span>Testing Label 03</span>
                         </div>
-
                     </div>
-
-
                 </div>
-
             </div>
-
         </section>
 
-
-
-        <!-- =========================================
-             4. CURATED TALKS VAULT
-        ========================================= -->
-
+        <!-- 4. CURATED TALKS VAULT -->
         <section class="section-vault">
-
             <div class="container">
-
                 <div class="section-header">
-
-                    <span class="section-tag">
-                        // Testing Tag 03
-                    </span>
-
+                    <span class="section-tag">// Testing Tag 03</span>
                     <h2 class="section-title">
                         Testing Heading 3. <em>Highlighted Title 3.</em>
                     </h2>
-
                 </div>
 
-
                 <div class="talks-grid">
-
-
                     <!-- Talk 01 -->
-
                     <div class="talk-item">
-
                         <div class="talk-media">
                             <iframe 
                                 src="" 
@@ -1713,38 +1342,20 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                             </iframe>
-
                         </div>
-
-
                         <div class="talk-info">
-
                             <div>
-
-                                <div class="talk-speaker">
-                                    Testing Speaker 01 • 0001
-                                </div>
-
-                                <h4 class="talk-title">
-                                    Testing Heading 01
-                                </h4>
-
+                                <div class="talk-speaker">Testing Speaker 01 • 0001</div>
+                                <h4 class="talk-title">Testing Heading 01</h4>
                                 <p class="talk-synopsis">
                                     Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
 
-
-
                     <!-- Talk 02 -->
-
                     <div class="talk-item">
-
                         <div class="talk-media">
                             <iframe 
                                 src="" 
@@ -1754,38 +1365,20 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                             </iframe>
-
                         </div>
-
-
                         <div class="talk-info">
-
                             <div>
-
-                                <div class="talk-speaker">
-                                    Testing Speaker 02 • 0002
-                                </div>
-
-                                <h4 class="talk-title">
-                                    Testing Heading 02
-                                </h4>
-
+                                <div class="talk-speaker">Testing Speaker 02 • 0002</div>
+                                <h4 class="talk-title">Testing Heading 02</h4>
                                 <p class="talk-synopsis">
                                     Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
 
-
-
                     <!-- Talk 03 -->
-
                     <div class="talk-item">
-
                         <div class="talk-media">
                             <iframe 
                                 src="" 
@@ -1795,70 +1388,33 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                             </iframe>
-
                         </div>
-
-
                         <div class="talk-info">
-
                             <div>
-
-                                <div class="talk-speaker">
-                                    Testing Speaker 03 • 0003
-                                </div>
-
-                                <h4 class="talk-title">
-                                    Testing Heading 03
-                                </h4>
-
+                                <div class="talk-speaker">Testing Speaker 03 • 0003</div>
+                                <h4 class="talk-title">Testing Heading 03</h4>
                                 <p class="talk-synopsis">
                                     Testing paragraph 1 2 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, ipsum at consequat luctus, lorem lorem tincidunt lorem.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
-
-
                 </div>
-
             </div>
-
         </section>
 
-
-
-        <!-- =========================================
-             5. FINAL SECTION — MASTER ARCHIVE LEDGER
-        ========================================= -->
-
+        <!-- 5. FINAL SECTION — MASTER ARCHIVE LEDGER -->
         <section class="section-archive-index">
-
             <div class="container">
-
                 <div class="archive-index-card">
-
                     <div class="index-header-row">
-
                         <div>
-
-                            <span class="section-tag">
-                                // Testing Tag 04
-                            </span>
-
-                            <h3>
-                                Testing Heading 4. <em>Highlighted Title 4.</em>
-                            </h3>
-
+                            <span class="section-tag">// Testing Tag 04</span>
+                            <h3>Testing Heading 4. <em>Highlighted Title 4.</em></h3>
                         </div>
-
                     </div>
 
-
                     <table class="archive-table">
-
                         <thead>
                             <tr>
                                 <th>Testing ID</th>
@@ -1869,117 +1425,77 @@
                                 <th>Testing Col 05</th>
                             </tr>
                         </thead>
-
                         <tbody>
-
                             <tr>
                                 <td class="table-id">TEST-01</td>
                                 <td>0001</td>
-                                <td>
-                                    <div class="table-title">Testing Heading 01</div>
-                                </td>
+                                <td><div class="table-title">Testing Heading 01</div></td>
                                 <td>Testing Speaker 01</td>
                                 <td><span class="table-tag">Testing Tag 01</span></td>
                                 <td>00:00</td>
                             </tr>
-
                             <tr>
                                 <td class="table-id">TEST-02</td>
                                 <td>0002</td>
-                                <td>
-                                    <div class="table-title">Testing Heading 02</div>
-                                </td>
+                                <td><div class="table-title">Testing Heading 02</div></td>
                                 <td>Testing Speaker 02</td>
                                 <td><span class="table-tag">Testing Tag 02</span></td>
                                 <td>00:00</td>
                             </tr>
-
                             <tr>
                                 <td class="table-id">TEST-03</td>
                                 <td>0003</td>
-                                <td>
-                                    <div class="table-title">Testing Heading 03</div>
-                                </td>
+                                <td><div class="table-title">Testing Heading 03</div></td>
                                 <td>Testing Speaker 03</td>
                                 <td><span class="table-tag">Testing Tag 03</span></td>
                                 <td>00:00</td>
                             </tr>
-
                             <tr>
                                 <td class="table-id">TEST-04</td>
                                 <td>0004</td>
-                                <td>
-                                    <div class="table-title">Testing Heading 04</div>
-                                </td>
+                                <td><div class="table-title">Testing Heading 04</div></td>
                                 <td>Testing Speaker 04</td>
                                 <td><span class="table-tag">Testing Tag 04</span></td>
                                 <td>00:00</td>
                             </tr>
-
                             <tr>
                                 <td class="table-id">TEST-05</td>
                                 <td>0005</td>
-                                <td>
-                                    <div class="table-title">Testing Heading 05</div>
-                                </td>
+                                <td><div class="table-title">Testing Heading 05</div></td>
                                 <td>Testing Speaker 05</td>
                                 <td><span class="table-tag">Testing Tag 05</span></td>
                                 <td>00:00</td>
                             </tr>
-
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </section>
-
-
     </main>
 
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================= -->
-
+    <!-- FOOTER -->
     <footer>
-
         <div class="container">
-
             <div class="footer-grid">
-
                 <div class="footer-brand-col">
-
                     <div class="footer-logo">
                         <span>TEDx</span>SunwayUniversity
                     </div>
-
                     <p class="footer-brand-desc">
                         Sunway University, Bandar Sunway, Malaysia
                     </p>
-
                     <div class="footer-socials">
-
                         <a href="https://www.instagram.com/tedxsunwayuniversity/" target="_blank" rel="noopener noreferrer">
                             <img src="insta.png" alt="Instagram">
                         </a>
-
                         <a href="https://www.linkedin.com/company/tedxsunwayuniversity/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
                             <img src="linkedin.png" alt="LinkedIn">
                         </a>
-
                     </div>
-
                 </div>
 
                 <div class="footer-col">
-
                     <h5>Navigation</h5>
-
                     <ul>
                         <li><a href="home.html">Home</a></li>
                         <li><a href="home.html#about">About</a></li>
@@ -1987,65 +1503,44 @@
                         <li><a href="home.html#agenda">Past Events</a></li>
                         <li><a href="#contact" class="open-contact-modal">Contact Us</a></li>
                     </ul>
-
                 </div>
 
                 <div class="footer-col">
-
                     <h5>About</h5>
-
                     <ul>
                         <li><a href="aboutH1.html">Header 01</a></li>
                         <li><a href="aboutH2.html">Header 02</a></li>
                         <li><a href="aboutH3.html">Header 03</a></li>
                     </ul>
-
                 </div>
 
                 <div class="footer-col">
-
                     <h5>Upcoming Event</h5>
-
                     <ul>
                         <li><a href="upcomingH4.html">Header 04</a></li>
                         <li><a href="upcomingH5.html">Header 05</a></li>
                         <li><a href="upcomingH6.html">Header 06</a></li>
                     </ul>
-
                 </div>
 
                 <div class="footer-col">
-
                     <h5>Past Events</h5>
-
                     <ul>
                         <li><a href="pastH7.html">Header 07</a></li>
                         <li><a href="pastH8.html">Header 08</a></li>
                         <li><a href="pastH9.html">Header 09</a></li>
                     </ul>
-
                 </div>
-
             </div>
 
             <div class="footer-sub">
-
                 <span>&copy; 2026 TEDx Sunway University. This independent TEDx event is operated under license from TED.</span>
-
                 <span>Sunway University • Bandar Sunway</span>
-
             </div>
-
         </div>
-
     </footer>
 
-
-
-    <!-- =========================================
-         CONTACT MODAL
-    ========================================= -->
-
+    <!-- CONTACT MODAL -->
     <div class="modal-backdrop" id="contactModal" aria-hidden="true">
         <div class="modal-card">
             <button class="modal-close-btn" id="closeContactBtn" aria-label="Close modal">&#x2715;</button>
@@ -2068,89 +1563,39 @@
         </div>
     </div>
 
-
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================= -->
-
+    <!-- JAVASCRIPT -->
     <script>
-
-        // =========================================
         // Ambient Cursor Spotlight
-        // =========================================
-
         const spotlight = document.getElementById("spotlight");
-
         window.addEventListener("mousemove", (e) => {
-
             spotlight.style.left = e.clientX + "px";
             spotlight.style.top = e.clientY + "px";
-
         });
 
-
-
-        // =========================================
         // Mobile Menu Toggle
-        // =========================================
-
         const hamburger = document.getElementById("hamburger");
         const mobileMenu = document.getElementById("mobileMenu");
 
         hamburger.addEventListener("click", () => {
-
             hamburger.classList.toggle("active");
-
             mobileMenu.classList.toggle("active");
-
-            const isOpen =
-                hamburger.classList.contains("active");
-
-            hamburger.setAttribute(
-                "aria-expanded",
-                isOpen
-            );
-
+            const isOpen = hamburger.classList.contains("active");
+            hamburger.setAttribute("aria-expanded", isOpen);
         });
 
-
-
-        // =========================================
         // Mobile Dropdowns
-        // =========================================
-
-        const mobileDropdowns =
-            document.querySelectorAll(".mobile-dropdown");
-
-
+        const mobileDropdowns = document.querySelectorAll(".mobile-dropdown");
         mobileDropdowns.forEach((dropdown) => {
-
-            const toggle =
-                dropdown.querySelector(
-                    ".mobile-dropdown-toggle"
-                );
-
-
+            const toggle = dropdown.querySelector(".mobile-dropdown-toggle");
             toggle.addEventListener("click", () => {
-
                 mobileDropdowns.forEach((other) => {
-
-                    if (other !== dropdown) {
-                        other.classList.remove("open");
-                    }
-
+                    if (other !== dropdown) other.classList.remove("open");
                 });
-
-
                 dropdown.classList.toggle("open");
-
             });
-
         });
 
-
-        // Close mobile menu on regular link click
+        // Close on regular link click
         const mobileLinks = mobileMenu.querySelectorAll("a");
         mobileLinks.forEach((link) => {
             link.addEventListener("click", () => {
@@ -2161,7 +1606,7 @@
             });
         });
 
-        // Close mobile menu on outside click
+        // Close on outside click
         document.addEventListener("click", (event) => {
             const insideMenu = mobileMenu.contains(event.target);
             const insideHamburger = hamburger.contains(event.target);
@@ -2182,11 +1627,7 @@
             }
         });
 
-
-        // =========================================
         // Contact Modal Logic
-        // =========================================
-
         const contactModal = document.getElementById("contactModal");
         const closeContactBtn = document.getElementById("closeContactBtn");
         const contactTriggers = document.querySelectorAll(".open-contact-modal");
@@ -2196,12 +1637,14 @@
             if (e) e.preventDefault();
             contactModal.classList.add("active");
             contactModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
             document.getElementById("contactEmail").focus();
         }
 
         function closeModal() {
             contactModal.classList.remove("active");
             contactModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
         }
 
         contactTriggers.forEach((btn) => btn.addEventListener("click", openModal));
@@ -2224,9 +1667,6 @@
             contactForm.reset();
             closeModal();
         });
-
     </script>
-
 </body>
-
 </html>

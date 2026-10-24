@@ -108,6 +108,7 @@
             display: flex;
             align-items: baseline;
             gap: 3px;
+            white-space: nowrap;
         }
 
         .brand-logo span.red {
@@ -211,6 +212,13 @@
             padding-left: 24px;
         }
 
+        /* Right Actions Wrapper */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .cta-pill {
             background: var(--ted-red);
             color: #fff;
@@ -222,6 +230,9 @@
             letter-spacing: 0.5px;
             transition: background 0.2s ease;
             cursor: pointer;
+            border: none;
+            display: inline-block;
+            white-space: nowrap;
         }
 
         .cta-pill:hover {
@@ -333,6 +344,11 @@
             padding: 13px 20px;
             border-radius: 4px;
             cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
         }
 
         /* =========================================
@@ -753,7 +769,7 @@
         }
 
         /* =========================================
-            MATCH FOOTER + CONTACT MODAL TO HOME PAGE
+            FOOTER
         ========================================= */
         footer,
         .modal-backdrop {
@@ -762,9 +778,6 @@
             --text-muted: #858591;
         }
 
-        /* =========================================
-            FOOTER
-        ========================================= */
         footer {
             padding: 80px 0 40px;
             background: #040406;
@@ -970,6 +983,7 @@
             border-radius: 4px;
             outline: none;
             transition: border-color 0.2s ease;
+            width: 100%;
         }
 
         .modal-input:focus {
@@ -1046,8 +1060,9 @@
                 padding: 40px 30px;
             }
 
+            /* Clean swap */
             .nav-menu,
-            .cta-pill {
+            .nav-actions .cta-pill {
                 display: none;
             }
 
@@ -1167,14 +1182,17 @@
                 </li>
             </ul>
 
-            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+            <!-- Right Actions Wrapper -->
+            <div class="nav-actions">
+                <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
 
-            <!-- Hamburger -->
-            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <!-- Hamburger -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu -->
@@ -1576,12 +1594,14 @@
             if (e) e.preventDefault();
             contactModal.classList.add("active");
             contactModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
             document.getElementById("contactEmail").focus();
         }
 
         function closeModal() {
             contactModal.classList.remove("active");
             contactModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
         }
 
         contactTriggers.forEach((btn) => btn.addEventListener("click", openModal));

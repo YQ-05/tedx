@@ -108,6 +108,7 @@
             display: flex;
             align-items: baseline;
             gap: 3px;
+            white-space: nowrap;
         }
 
         .brand-logo span.red {
@@ -211,6 +212,13 @@
             padding-left: 24px;
         }
 
+        /* Nav Actions (Right Group) */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .cta-pill {
             background: var(--ted-red);
             color: #fff;
@@ -224,6 +232,7 @@
             cursor: pointer;
             border: none;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .cta-pill:hover {
@@ -575,7 +584,6 @@
             background: var(--line-white);
         }
 
-        /* Image Box inside Card */
         .member-img-wrap {
             width: 100%;
             aspect-ratio: 16 / 10;
@@ -959,7 +967,7 @@
         }
 
         /* =========================================
-            SPEAKER NOMINATION MODAL (SPACIOUS & EXPANDED)
+            SPEAKER NOMINATION MODAL
         ========================================= */
         .modal-backdrop {
             position: fixed;
@@ -998,7 +1006,6 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Custom scrollbar for modal */
         .modal-card::-webkit-scrollbar {
             width: 6px;
         }
@@ -1221,8 +1228,9 @@
         }
 
         @media (max-width: 1024px) {
+            /* Clean swap: Desktop menu and CTA button hide together */
             .nav-menu,
-            .cta-pill {
+            .nav-actions .cta-pill {
                 display: none;
             }
 
@@ -1369,14 +1377,17 @@
                 </li>
             </ul>
 
-            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+            <!-- Right Actions Group -->
+            <div class="nav-actions">
+                <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
 
-            <!-- Hamburger -->
-            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <!-- Hamburger -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu -->
@@ -1709,7 +1720,7 @@
         </div>
     </footer>
 
-    <!-- Contact Modal (Matching Header 02) -->
+    <!-- Contact Modal -->
     <div class="contact-modal-backdrop" id="contactModal" aria-hidden="true">
         <div class="contact-modal-card">
             <button class="contact-modal-close" id="closeContactBtn" aria-label="Close modal">&times;</button>
@@ -1732,7 +1743,7 @@
         </div>
     </div>
 
-    <!-- Speaker Nomination Modal (Spacious) -->
+    <!-- Speaker Nomination Modal -->
     <div class="modal-backdrop" id="nominationModal" aria-hidden="true">
         <div class="modal-card">
             <button class="modal-close-btn" id="closeNominationBtn" aria-label="Close modal">&times;</button>
@@ -1950,7 +1961,7 @@
             });
         });
 
-        // Contact Modal Logic (Top-right button + footer Contact Us trigger)
+        // Contact Modal Logic
         const contactModal = document.getElementById("contactModal");
         const closeContactBtn = document.getElementById("closeContactBtn");
         const contactTriggers = document.querySelectorAll(".open-contact-modal");
@@ -1967,7 +1978,7 @@
         function closeContactModal() {
             contactModal.classList.remove("active");
             contactModal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "auto";
+            document.body.style.overflow = "";
         }
 
         contactTriggers.forEach((btn) => btn.addEventListener("click", openContactModal));
@@ -1985,7 +1996,7 @@
             closeContactModal();
         });
 
-        // Speaker Nomination Modal Logic (Directive Board trigger)
+        // Speaker Nomination Modal Logic
         const nominationModal = document.getElementById("nominationModal");
         const closeNominationBtn = document.getElementById("closeNominationBtn");
         const modalTriggers = document.querySelectorAll(".open-nomination-modal");
@@ -2002,7 +2013,7 @@
         function closeNominationModal() {
             nominationModal.classList.remove("active");
             nominationModal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "auto";
+            document.body.style.overflow = "";
         }
 
         modalTriggers.forEach((btn) => btn.addEventListener("click", openNominationModal));
@@ -2020,7 +2031,7 @@
             closeNominationModal();
         });
 
-        // Global Escape Key listener for all active modals
+        // Global Escape Key listener
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
                 if (contactModal.classList.contains("active")) closeContactModal();

@@ -70,6 +70,7 @@
             z-index: 0;
         }
 
+        /* Fixed container calculation to avoid layout shift */
         .container {
             width: min(var(--max-width), calc(100% - 64px));
             margin: 0 auto;
@@ -108,6 +109,7 @@
             display: flex;
             align-items: baseline;
             gap: 3px;
+            white-space: nowrap;
         }
 
         .brand-logo span.red {
@@ -211,6 +213,13 @@
             padding-left: 24px;
         }
 
+        /* Nav Actions (Right Group) */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .cta-pill {
             background: var(--ted-red);
             color: #fff;
@@ -222,6 +231,7 @@
             letter-spacing: 0.5px;
             transition: background 0.2s ease;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .cta-pill:hover {
@@ -256,7 +266,7 @@
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* Mobile Menu */
+        /* Mobile Dropdown Menu */
         .mobile-menu {
             display: none;
             position: absolute;
@@ -333,6 +343,10 @@
             padding: 13px 20px;
             border-radius: 4px;
             cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         /* =========================================
@@ -741,7 +755,7 @@
         }
 
         /* =========================================
-           MATCH FOOTER + CONTACT MODAL TO HOME PAGE
+           FOOTER
         ========================================= */
         footer,
         .modal-backdrop {
@@ -750,9 +764,6 @@
             --text-muted: #858591;
         }
 
-        /* =========================================
-           FOOTER
-        ========================================= */
         footer {
             padding: 80px 0 40px;
             background: #040406;
@@ -1000,8 +1011,9 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Clean swap: Desktop menu and CTA button hide together */
             .nav-menu,
-            .cta-pill {
+            .nav-actions .cta-pill {
                 display: none;
             }
 
@@ -1132,14 +1144,17 @@
                 </li>
             </ul>
 
-            <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
+            <!-- Right Actions Group -->
+            <div class="nav-actions">
+                <a href="#contact" class="cta-pill open-contact-modal">Contact</a>
 
-            <!-- Hamburger -->
-            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <!-- Hamburger -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu -->
